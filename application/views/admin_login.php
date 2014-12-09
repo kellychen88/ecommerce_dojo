@@ -21,16 +21,12 @@
 <body>
 	<h2>Admin Login Page</h2>
 
-  <form action='/main/login' method='post'>    
+  <form action='/admin/display' method='post'>    
     <input type='hidden' name='action' value='login' />
     <p>Email Address:<input type='text' name='email' /></p>
     <p>Password:<input type='password' name='password' /></p>
     <input type='submit' value='Login' class="btn btn-default"/>
   </form>
-
-
-</body>
-</html
 
 
 </body>
