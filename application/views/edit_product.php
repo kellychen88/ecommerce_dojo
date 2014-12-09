@@ -85,11 +85,6 @@
 	</style>
 	<script type="text/javascript">
 
-	$(function(){
-      $("#div1").html('<a href="example.html">Link</a><b>hello</b>');
-      $("#div2").text('<a href="example.html">Link</a><b>hello</b>');
-    });
-
 	  $(document).ready(function(){
 			$("select").hover(function(){
 	    	$("select").css("background-color","yellow");
@@ -124,8 +119,8 @@
 	</script>
 </head>
 <body>
-	<div id="div1"></div>
-	<div id="div2"></div>
+<?php echo $error;?>
+
 
 <div id='container'>
   <h3 id='header-text'>Edit Product - ID 2</h3>
@@ -135,7 +130,7 @@
 
 
   <div id='details'>
-   <form action='' method='post'>
+   <form action='/main2/update' method='post' enctype="multipart/form-data">
 	<div class='name-div'>
 		<div class='name'>	
 			<span class='title'>Name</span>
@@ -177,19 +172,18 @@
 
 	<div>	
 		<span class='title'>Images</span>
-		<input type='file' class='display-upload' name='upload' value='Upload'></button>
+		<input type='file' class='display-upload' name='userfile' size='20'>
 		<!-- <input type="file" class="btn btn-default display-upload" name='upload' value='Upload'></button> -->
 	</div>
 
 	<div class='icons'>
 		<button type="button" class="btn  btn-small btn-default" aria-label="Left Align">
-		  <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
 		</button>
 
 		<!-- <button type="button" class="btn btn-small btn-default hover-image"> -->
-		  <div class='hover-images'><img src="../../assets/square.jpg" alt="Hat" height="42" width="42"></div> 
-		  <!-- <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> -->
-		</button>
+		 <div class='hover-images'><img src="../../assets/square.jpg" alt="Hat" height="42" width="42"></div> 
+		<!-- <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> -->
 		<p class='button-text'>img.png</p>
 
 		<button type="button" class="btn btn-small btn-default btn-trash">
@@ -206,24 +200,23 @@
 <!-- 	<div class=" btn-group btn-group-justified" role="group" aria-label="...">
 	 	<div class="btn-group" role="group"> -->
 	    	<button type="button" class="btn btn-small btn-default" >
-	    		<a href='/' >Cancel</a></button>
+	    		<a href='/' >Cancel</a>
+	    	</button>
 <!-- 	  	</div>
 	  	<div class="btn-group" role="group"> -->
 	    	<button type="button" class="btn btn-small btn-success" >
-	    		<a href='/' class='preview' target="_blank">Preview</a></button>
+	    		<a href='/' class='preview' target="_blank">Preview</a>
+	    	</button>
 <!-- 	  	</div>
 	  	<div class="btn-group" role="group"> -->
-	    	<button type="submit" class="btn btn-small btn-primary" >
-	    		<a href='/' >Update</a></button>
+	    	<button type="submit" class="btn btn-small btn-primary" value='upload'>
+	    		<!-- <a href='/' >Update</a> -->
+	    		Update
+	    	</button>
 	  <!-- 	</div> -->
 	</div>
 
-
   </form>
 </div>
-</body>
-</html
-
-
 </body>
 </html>

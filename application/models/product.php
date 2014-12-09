@@ -20,4 +20,8 @@ class Product extends CI_Model {
      {
          return $this->db->query("SELECT * FROM products WHERE id = ?", array($product_id))->row_array();
      }
+
+    function add_image($image){
+        
+    }
 }
