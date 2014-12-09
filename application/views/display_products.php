@@ -65,9 +65,9 @@
           <div class="container-fluid">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li><a class="navbar-brand" href="#">Dojo eCommerce</a></li>
-                <li><a href="/orders/index">Orders</a></li>
-                <li><a href="/orders/products">Products</a></li>
+                <li><a class="navbar-brand" href="/products/index">Dojo eCommerce</a></li>
+                <li><a href="/admin/display">Orders</a></li>
+                <li><a href="/admin/products">Products</a></li>
               </ul>
               <form class="navbar-form navbar-right" role="search">
                 <div class="form-group">
@@ -76,7 +76,7 @@
                 <button type="submit" class="btn btn-default">Submit</button>
               </form>
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Log Off</a></li>
+                <li><a href="/admin/index">Log Off</a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
@@ -103,8 +103,8 @@
             <td class="address"> 5 people </td>
             <td> 1 </td>
             <td>
-              <a href=""> Edit </a>
-              <a href=""> Delete </a>
+              <a href="/admin/edit"> Edit </a>
+              <a href="/admin/delete"> Delete </a>
             </td>
           </tr>
           <tr>
@@ -114,8 +114,8 @@
             <td class="address"> 100 people </td>
             <td> 22 </td>
             <td>
-              <a href=""> Edit </a>
-              <a href=""> Delete </a>
+              <a href="/admin/edit"> Edit </a>
+              <a href="/admin/delete"> Delete </a>
             </td>
           </tr>
           <tr>
@@ -125,8 +125,8 @@
             <td class="address"> 35 people </td>
             <td> 17 </td>
             <td>
-              <a href=""> Edit </a>
-              <a href=""> Delete </a>
+              <a href="/admin/edit"> Edit </a>
+              <a href="/admin/delete"> Delete </a>
             </td>
           </tr>
           <tr>
@@ -136,8 +136,8 @@
             <td class="address"> 6 people </td>
             <td> 2 </td>
             <td>
-              <a href=""> Edit </a>
-              <a href=""> Delete </a>
+              <a href="/admin/edit"> Edit </a>
+              <a href="/admin/delete"> Delete </a>
             </td>
           </tr>
         </tbody>
