@@ -90,30 +90,12 @@
 
 
 	  $(document).ready(function(){
-			// $("select").hover(function(){
-	  //   	$("select").css("background-color","yellow");
-	  //   		},function(){
-	  //   			$("select").css("background-color","pink");
-			//   });
-	  	$(document).on(function(sortDropDownListByText){
-			function sortDropDownListByText() {
-				$("select").each(function() {
+			$("select").hover(function(){
+	    	$("select").css("background-color","yellow");
+	    		},function(){
+	    			$("select").css("background-color","pink");
+			  });
 
-			    // Keep track of the selected option.
-			    var selectedValue = $(this).val();
-
-			    $(this).html($("option", function() {
-			    		.text("add");
-			    }));
-			    // Sort all the options by text. I could easily sort these by val.
-			    $(this).html($("option", $(this)).sort(function(a, b) {
-			        return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
-			    }));
-
-				});
-			}
-		}
-//
 		 	$(".hover-images").hover(
 				function() {
 			    	$(this).css('cursor','crosshair');
@@ -127,9 +109,14 @@
 				}
 			);
 
-
+			$("select > option").hover(function ()
+			{
+			         alert($target.attr("value"));//Will alert id if it has id attribute
+			         alert($target.text());//Will alert the text of the option
+			         alert($target.val());//Will alert the value of the option
+			     
+			});
 	}); //end doc. ready
-
 
 
 
@@ -138,7 +125,7 @@
 <body>
 
 <div id='container'>
-  <h3 id='header-text'>Edit Product - ID <?= $product['id'] ?></h3>
+  <h3 id='header-text'>Edit Product - ID 2</h3>
   <button type="button" id='hearder-remove' class="btn btn-small btn-default">
   	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
   </button>
@@ -149,28 +136,27 @@
 	<div class='name-div'>
 		<div class='name'>	
 			<span class='title'>Name</span>
-			<input class='display-name' type='text' name='name' value='<?= $product['name'] ?>'>
+			<input class='display-name' type='text' name='name' placeholder='name'>
 		</div>
 		<div>
 			<span class='title'>Description</span>
-			<input class='display-desc' type='textarea' name='desc' value='<?= $product['description'] ?>'>
+			<input class='display-desc' type='textarea' name='desc' value='Great Fit, Cool new colors'>
 		</div>
 	</div>
 
 	<div class='cat'>
 		<span class='title'>Categories</span>
 		<select class='display-cat' name='cat' >
- <?php 		  
-	for($i = count($this->session->userdata('category')) - 1; $i >= 0; $i--)
-		  {
-		  	$catname=$this->session->userdata('category')[$i]['name'];
-            echo "<option value='".$catname.' >'.$catname.'</option>';
-		    
-		  }
-		?>
+		  <option value='shirt' >Shirt</option>
+		  <option value='hat' selected>Hat</option>
+		  <option value='mug'>Mug</option>
+		  <option value='pant'>Pant</option>
+		  <option value='key-chain'>Key Chain</option>
+		  <option value='belt'>Belt</option>
 		</select>
 		
 		<div class='div-product' contentEditable="true">
+			<!-- <input class='display-product' type='textarea' name='show-product' placeholder='Hat<br>Mug<br>' > -->
 			<textarea class='display-product' name='show-product' placeholder='Hat,Mug...'> </textarea>
 			<button type="button" class="btn btn-mini btn-default btn-product"> 
 		  		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -189,6 +175,7 @@
 	<div>	
 		<span class='title'>Images</span>
 		<input type='file' class='display-upload' name='upload' value='Upload'></button>
+		<!-- <input type="file" class="btn btn-default display-upload" name='upload' value='Upload'></button> -->
 	</div>
 
 	<div class='icons'>
@@ -196,7 +183,9 @@
 		  <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
 		</button>
 
-		<div class='hover-images'><img src="../../assets/square.jpg" alt="Hat" height="42" width="42"></div> 
+		<!-- <button type="button" class="btn btn-small btn-default hover-image"> -->
+		  <div class='hover-images'><img src="../../assets/square.jpg" alt="Hat" height="42" width="42"></div> 
+		  <!-- <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> -->
 		</button>
 		<p class='button-text'>img.png</p>
 
@@ -211,15 +200,19 @@
 	</div>
 	
 	<div class='btn-bottom'>
+<!-- 	<div class=" btn-group btn-group-justified" role="group" aria-label="...">
+	 	<div class="btn-group" role="group"> -->
 	    	<button type="button" class="btn btn-small btn-default" >
 	    		<a href='/' >Cancel</a></button>
-
+<!-- 	  	</div>
+	  	<div class="btn-group" role="group"> -->
 	    	<button type="button" class="btn btn-small btn-success" >
 	    		<a href='/' class='preview' target="_blank">Preview</a></button>
-
+<!-- 	  	</div>
+	  	<div class="btn-group" role="group"> -->
 	    	<button type="submit" class="btn btn-small btn-primary" >
 	    		<a href='/' >Update</a></button>
-
+	  <!-- 	</div> -->
 	</div>
 
 

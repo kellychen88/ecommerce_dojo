@@ -1,13 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Product extends CI_Model {
-     function get_all_users()
+    function get_all_categories()
      {
-         return $this->db->query("SELECT * FROM products")->result_array();
+         return $this->db->query("SELECT * FROM category")->result_array();
      }
-     function get_product_by_id($course_id)
+    function get_product_by_id($product_id)
      {
-         return $this->db->query("SELECT * FROM products WHERE id = ?", array($course_id))->row_array();
+          return $this->db->query("SELECT * FROM products WHERE id = ?", array($product_id))->row_array();
      }
      function add_product($product)
      {
@@ -16,8 +16,16 @@ class Product extends CI_Model {
 
          return $this->db->query($query, $values);
      }
-    function get_product_by_id($product_id)
-     {
-         return $this->db->query("SELECT * FROM products WHERE id = ?", array($product_id))->row_array();
+
+    function delete_product($product_id)
+    {  //TO DO
+
+        $query = "DELETE comments, messages 
+                  FROM comments, messages 
+                  WHERE comments.message_id = messages.id  
+                  AND messages.id = {$dlt_details['message_id']}";
+        return $this->db->query($query);
      }
+
+
 }
