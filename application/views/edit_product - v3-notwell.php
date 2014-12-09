@@ -90,6 +90,29 @@
 
 
 	  $(document).ready(function(){
+			// $("select").hover(function(){
+	  //   	$("select").css("background-color","yellow");
+	  //   		},function(){
+	  //   			$("select").css("background-color","pink");
+			//   });
+	  	//$(document).on(function(sortDropDownListByText){
+			function sortDropDownListByText() {
+				$("select").each(function() {
+
+			    // Keep track of the selected option.
+			    var selectedValue = $(this).val();
+
+			    $(this).html($("option", function() {
+			    		.text("add");
+			    }));
+			    // Sort all the options by text. I could easily sort these by val.
+			    $(this).html($("option", $(this)).sort(function(a, b) {
+			        return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+			    }));
+
+				});
+			}
+		//}
 
 		 	$(".hover-images").hover(
 				function() {
