@@ -3,20 +3,20 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-if(ENVIRONMENT == 'production')
-{
-	$db['default']['hostname'] = 'localhost';
-	$db['default']['username'] = 'root';
-	$db['default']['password'] = '';
-	$db['default']['database'] = '';
-}
-else
-{
+// if(ENVIRONMENT == 'production')
+// {
 	$db['default']['hostname'] = 'localhost';
 	$db['default']['username'] = 'root';
 	$db['default']['password'] = 'root';
-	$db['default']['database'] = 'login_registration';
-}
+	$db['default']['database'] = 'ecommerce';
+// }
+// else
+// {
+// 	$db['default']['hostname'] = 'localhost';
+// 	$db['default']['username'] = 'root';
+// 	$db['default']['password'] = 'root';
+// 	$db['default']['database'] = 'login_registration';
+// }
 
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

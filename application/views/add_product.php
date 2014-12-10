@@ -66,6 +66,10 @@
 				display: inline-block;
 				/*width: 220px;*/
 		}
+		.display-price{
+			margin: 0px 0px 5px 100px;
+			display: inline-block;
+			width: 220px;		}
 		.button-text{
 			display: inline-block;
 		}
@@ -119,7 +123,7 @@
 	</script>
 </head>
 <body>
-<?php echo $error;?>
+<?php // echo $error;?>
 
 
 <div id='container'>
@@ -130,32 +134,34 @@
 
 
   <div id='details'>
-   <form action='/main2/update' method='post' enctype="multipart/form-data">
+   <form action='/admin/update' method='post' enctype="multipart/form-data">
 	<div class='name-div'>
 		<div class='name'>	
 			<span class='title'>Name</span>
-			<input class='display-name' type='text' name='name' placeholder='name'>
+			<input class='display-name' type='text' name='name' placeholder='name' value='kelly'>
 		</div>
 		<div>
 			<span class='title'>Description</span>
-			<input class='display-desc' type='textarea' name='desc' value='Great Fit, Cool new colors'>
+			<input class='display-desc' type='textarea' name='description' value='Great Fit, Cool new colors'>
+		</div>
+		<div>	
+			<span class='title'>Price ($)</span>
+			<input class='display-price' type='text' name='price' placeholder='name' value='119.99'>
 		</div>
 	</div>
-
 	<div class='cat'>
 		<span class='title'>Categories</span>
 		<select class='display-cat' name='cat' >
-		  <option value='shirt' >Shirt</option>
-		  <option value='hat' selected>Hat</option>
-		  <option value='mug'>Mug</option>
-		  <option value='pant'>Pant</option>
-		  <option value='key-chain'>Key Chain</option>
-		  <option value='belt'>Belt</option>
+		  <option value='7' >Shirt</option>
+		  <option value='8' selected>Hat</option>
+		  <option value='9'>Mug</option>
+		  <option value='10'>Pant</option>
+		  <option value='11'>Key Chain</option>
+		  <option value='12'>Belt</option>
 		</select>
 		
 		<div class='div-product' contentEditable="true">
 			<!-- <input class='display-product' type='textarea' name='show-product' placeholder='Hat<br>Mug<br>' > -->
-			<textarea class='display-product' name='show-product' placeholder='Hat,Mug...'> </textarea>
 			<button type="button" class="btn btn-mini btn-default btn-product"> 
 		  		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 			</button>
@@ -167,7 +173,7 @@
 	
 	<div>
 		<span class='title'>or add new category</span>
-		<input class='display-new' type='text' name='add_cat' placeholder='add new category'>
+		<input class='display-new' type='text' name='add_new_cat' placeholder='add new category'>
 	</div>
 
 	<div>	

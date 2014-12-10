@@ -3,7 +3,7 @@
 // $route['default_controller'] = "products";
 // $route['default_controller'] = "main";
 // $route['default_controller'] = "main";
-$route['default_controller'] = "main2";
+$route['default_controller'] = "products";
 $route['404_override'] = '';
 $route['admin'] = "admin";
 

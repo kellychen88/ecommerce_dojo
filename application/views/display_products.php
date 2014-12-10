@@ -82,7 +82,7 @@
           </div><!-- /.container-fluid -->
         </nav>
     <div id="add_new">
-      <button><a href="#"> Add new product </a></button>
+      <button><a href="/admin/add"> Add new product </a></button>
     </div>
     <div class="table-responsive"></div>
       <!-- Table -->
