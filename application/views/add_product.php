@@ -1,3 +1,9 @@
+<?php
+if(isset($error))
+{
+	echo $error;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,7 +122,7 @@
 <body>
 
 <div id='container'>
-  <h3 id='header-text'>Add Product - ID <?= $product['id'] ?></h3>
+  <h3 id='header-text'>Add Product</h3>
   <button type="button" id='hearder-remove' class="btn btn-small btn-default">
   	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
   </button>

@@ -28,6 +28,9 @@
 		    background-color: #98cdf2;
 		    border-color: #E7E7E7;
 		}
+		body{
+			padding: 70px;
+		}
 		.container{margin-bottom: 20px}
 		.total{text-align: right;}
 		.row-spacing{padding-top:20px;}

@@ -104,7 +104,7 @@
          <button type="submit" class="btn btn-default">Submit</button>
        </form>
        <ul class="nav navbar-nav navbar-right">
-         <li><a href="#">Log Off</a></li>
+         <li><a href="admin/index">Log Off</a></li>
        </ul>
      </div><!-- /.navbar-collapse -->
    </div><!-- /.container-fluid -->

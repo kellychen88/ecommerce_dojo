@@ -57,7 +57,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><a class="navbar-brand" href="/products/index">Dojo eCommerce</a></li>
-            <li><a href="/admin/index">Orders</a></li>
+            <li><a href="/admin/display">Orders</a></li>
             <li><a href="/admin/products">Products</a></li>
           </ul>
           <form class="navbar-form navbar-right" role="search">
@@ -67,7 +67,7 @@
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Log Off</a></li>
+            <li><a href="/admin/index">Log Off</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->

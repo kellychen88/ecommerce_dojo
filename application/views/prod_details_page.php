@@ -22,6 +22,10 @@
 		});
 	</script>
 	<style type="text/css">
+		.navbar-default{
+		    background-color: #98cdf2;
+		    border-color: #E7E7E7;
+		}
 		.container-main{padding-left: 20px;}
 		.left-section{width:350px; display: inline-block; vertical-align: top;}
 		.right-section{width: 500px; display: inline-block; vertical-align: top; margin-top: 40px;}
@@ -30,6 +34,9 @@
 			position: relative;
 			display: inline-block;
 			margin-right:20px;
+		}
+		body{
+			padding: 70px;
 		}
 		.thumbnail1{width:300px; margin: 10px;}
 		.main-img{ height:300px; width:300px;}

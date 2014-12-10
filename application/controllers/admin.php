@@ -44,7 +44,8 @@ class Admin extends CI_Controller {
 		$product_id = 38; //hard code for now
 		$array['product']  = $this->product->get_product_by_id($product_id);	
 		$array['category'] = $this->product->get_all_categories();
-	
+		// var_dump($array);
+		// die();
 		$this->load->view('add_product', $array);
 
 	}
@@ -65,13 +66,12 @@ class Admin extends CI_Controller {
 	{
 		// $config['upload_path'] = './uploads/';
 		$config['upload_path'] = '././assets/img/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '100';
+		$config['allowed_types'] = 'gif|jpeg|png';
+		$config['max_size']	= '500';
 		$config['max_width']  = '1024';
 		$config['max_height']  = '768';
 
 		$this->load->library('upload', $config);
-
 		// check whether any image data is available
 		if ( ! $this->upload->do_upload())
 		{
@@ -83,11 +83,10 @@ class Admin extends CI_Controller {
 		{
 			// upload file
 			$data = array('upload_data' => $this->upload->data());
+			// var_dump($data);
 			$file_name='././assets/img/'.$data['upload_data']['file_name'];
-
 			// grab all data
 			$product=$this->input->post();
-
 			// check if new category is added. If so, then use that new cat_id instead
 			if (!empty($product['add_new_cat'])) {
 				// create new category ID
