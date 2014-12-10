@@ -42,12 +42,13 @@ class Admin extends CI_Controller {
 	{
 		$product_id = 38; //hard code for now
 		$test = $this->product->get_product_by_id($product_id);		
-		$array['product']  = $this->Product->get_product_by_id($product_id);
-   // var_dump($array);  die();
+		var_dump("hello"); //var_dump($test);  die();
+		$array['product']  = $this->product->get_product_by_id($product_id);	
+    //var_dump($array);  die();
 		$this->session->set_userdata('product_id', $product_id);
 		$this->session->set_userdata('category',array());
 
-		$category  = $this->Product->get_all_categories();
+		$category  = $this->product->get_all_categories();
 
 		$this->session->set_userdata('category', $category);
 //var_dump($this->session->userdata('category'));  die();	
