@@ -6,8 +6,8 @@ $active_record = TRUE;
 
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'dba';
-$db['default']['password'] = 'dojo';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'root';
 $db['default']['database'] = 'ecommerce';
 
 
