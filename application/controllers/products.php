@@ -5,7 +5,7 @@ class Products extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-//		$this->load->model('____');  
+		$this->load->model('product');   
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
 		date_default_timezone_set('America/Los_Angeles'); 
@@ -14,7 +14,12 @@ class Products extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('category_page');
+		// $product_id = 38; //hard code for now
+		$array['product']  = $this->product->get_all_products();	
+		$array['category'] = $this->product->get_all_categories();
+	//var_dump($array); die();
+
+		$this->load->view('category_page', $array);
 	}
 
 	public function prod_details()

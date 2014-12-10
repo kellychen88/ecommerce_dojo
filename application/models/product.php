@@ -5,6 +5,10 @@ class product extends CI_Model {
      {
          return $this->db->query("SELECT * FROM category")->result_array();
      }
+    function get_all_products()
+     {
+         return $this->db->query("SELECT * FROM products")->result_array();
+     }
     function get_product_by_id($product_id)
      {
         //var_dump($product_id);

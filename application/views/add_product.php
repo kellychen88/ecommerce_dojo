@@ -160,7 +160,7 @@
 		  <option value='11'>Key Chain</option>
 		  <option value='12'>Belt</option>
 	 -->
-		<div class='div-product' contentEditable="true">
+		<!-- <div class='div-product' contentEditable="true"> -->
 			<button type="button" class="btn btn-mini btn-default btn-product"> 
 		  		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 			</button>

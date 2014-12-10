@@ -73,21 +73,13 @@
 				margin: 8px 0px 5px 140px;
 				display: inline-block;
 		}
-		.div-product {
-    		position:relative;
-		}
-		.btn-product {
-			position:absolute;
-		}
 		.glyphicon-trash, .btn-trash {
-			visibility: collapse;
+			visibility: hidden;
 		}
 	</style>
 
 
 	<script type="text/javascript">
-
-
 
 	  $(document).ready(function(){
 
@@ -107,9 +99,6 @@
 
 	}); //end doc. ready
 
-
-
-
 	</script>
 </head>
 <body>
@@ -122,7 +111,7 @@
 
 
   <div id='details'>
-   <form action='/main/action' method='post'>
+   <form action='/main/process' method='post'>
 	<div class='name-div'>
 		<div class='name'>	
 			<span class='title'>Name</span>
@@ -172,7 +161,7 @@
 		</button>
 
 		<div class='hover-images'><img src="../../assets/square.jpg" alt="Hat" height="42" width="42"></div> 
-		</button>
+		
 		<p class='button-text'>img.png</p>
 
 		<button type="button" class="btn btn-small btn-default btn-trash">
@@ -186,9 +175,9 @@
 	</div>
 	
 	<div class='btn-bottom'>
-	    	<button type="submit" class="btn btn-small btn-default" name='action' value='Cancel'>
+	    	<input type="submit" class="btn btn-small btn-default" name='action' value='Cancel'>
 	    	<input type="submit" class="btn btn-small btn-success" name='action' value='Preview' >
-	    	<button type="submit" class="btn btn-small btn-primary" name='action' value='Update'>
+	    	<input type="submit" class="btn btn-small btn-primary" name='action' value='Update'>
 	    	
 	</div>
 
