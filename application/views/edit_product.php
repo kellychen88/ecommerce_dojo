@@ -122,7 +122,7 @@
 
 
   <div id='details'>
-   <form action='' method='post'>
+   <form action='/main/action' method='post'>
 	<div class='name-div'>
 		<div class='name'>	
 			<span class='title'>Name</span>
@@ -141,20 +141,19 @@
 	for($i = count($this->session->userdata('category')) - 1; $i >= 0; $i--)
 		  {
 		  	$catname=$this->session->userdata('category')[$i]['name'];
-            echo "<option value='".$catname.' >'.$catname.'</option>';
-		    
+            echo "<option value='".$catname."' >".$catname.'</option>';
+		    // var_dump("<option value='".$catname."' >".$catname.'</option>'); die();
+
 		  }
-		?>
+	?>
 		</select>
-		
-		<div class='div-product' contentEditable="true">			
+
 			<button type="button" class="btn btn-mini btn-default btn-product"> 
 		  		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 			</button>
 			<button type="button" class="btn btn-mini btn-default">
 		  		<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 			</button>
-		</div>
 	</div>
 	
 	<div>
@@ -187,15 +186,10 @@
 	</div>
 	
 	<div class='btn-bottom'>
-	    	<button type="button" class="btn btn-small btn-default" >
-	    		<a href='/' >Cancel</a></button>
-
-	    	<button type="button" class="btn btn-small btn-success" >
-	    		<a href='/' class='preview' target="_blank">Preview</a></button>
-
-	    	<button type="submit" class="btn btn-small btn-primary" >
-	    		<a href='/' >Update</a></button>
-
+	    	<button type="submit" class="btn btn-small btn-default" name='action' value='Cancel'>
+	    	<input type="submit" class="btn btn-small btn-success" name='action' value='Preview' >
+	    	<button type="submit" class="btn btn-small btn-primary" name='action' value='Update'>
+	    	
 	</div>
 
 
