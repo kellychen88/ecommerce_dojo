@@ -10,6 +10,11 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
+<style>
+	body{
+		padding: 70px;
+	}
+</style>
 <body>
 	<h2>Admin Login Page</h2>
 

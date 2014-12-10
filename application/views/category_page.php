@@ -23,7 +23,13 @@
 	</script>
 	<style type="text/css">
 /*		.container-main{margin:10px 0px 0px 20px;}
-*/		
+*/		.navbar-default{
+		    background-color: #98cdf2;
+		    border-color: #E7E7E7;
+		}
+		body{
+			padding: 70px;
+		}
 		.container-main{
     		white-space: nowrap;
     		max-width: 99%;
