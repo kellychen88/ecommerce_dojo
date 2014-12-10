@@ -3,20 +3,14 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-// if(ENVIRONMENT == 'production')
-// {
-// 	$db['default']['hostname'] = 'localhost';
-// 	$db['default']['username'] = 'root';
-// 	$db['default']['password'] = '';
-// 	$db['default']['database'] = '';
-// }
-// else
-// {
-	$db['default']['hostname'] = 'localhost';
-	$db['default']['username'] = 'dba';
-	$db['default']['password'] = 'dojo';
-	$db['default']['database'] = 'ecommerce';
-//}
+
+
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'dba';
+$db['default']['password'] = 'dojo';
+$db['default']['database'] = 'ecommerce';
+
+
 
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

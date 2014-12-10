@@ -66,6 +66,10 @@
 				display: inline-block;
 				/*width: 220px;*/
 		}
+		.display-price{
+			margin: 0px 0px 5px 100px;
+			display: inline-block;
+			width: 220px;		}
 		.button-text{
 			display: inline-block;
 		}
@@ -87,8 +91,11 @@
 
 	<script type="text/javascript">
 
+<<<<<<< HEAD:application/views/edit_product.php
 
 
+=======
+>>>>>>> e86aed8133139632efc80ffa35cf8464bd3673e4:application/views/add_product.php
 	  $(document).ready(function(){
 
 		 	$(".hover-images").hover(
@@ -122,18 +129,21 @@
 
 
   <div id='details'>
-   <form action='/main/action' method='post'>
+   <form action='/admin/update' method='post' enctype="multipart/form-data">
 	<div class='name-div'>
 		<div class='name'>	
 			<span class='title'>Name</span>
-			<input class='display-name' type='text' name='name' value='<?= $product['name'] ?>'>
+			<input class='display-name' type='text' name='name' placeholder='name' value='kelly'>
 		</div>
 		<div>
 			<span class='title'>Description</span>
-			<input class='display-desc' type='textarea' name='desc' value='<?= $product['description'] ?>'>
+			<input class='display-desc' type='textarea' name='description' value='Great Fit, Cool new colors'>
+		</div>
+		<div>	
+			<span class='title'>Price ($)</span>
+			<input class='display-price' type='text' name='price' placeholder='name' value='119.99'>
 		</div>
 	</div>
-
 	<div class='cat'>
 		<span class='title'>Categories</span>
 		<select class='display-cat' name='cat' >
@@ -141,13 +151,22 @@
 	for($i = count($this->session->userdata('category')) - 1; $i >= 0; $i--)
 		  {
 		  	$catname=$this->session->userdata('category')[$i]['name'];
-            echo "<option value='".$catname."' >".$catname.'</option>';
+		  	$catid=$this->session->userdata('category')[$i]['id'];
+            echo "<option value='".$catid."' >".$catname.'</option>';
 		    // var_dump("<option value='".$catname."' >".$catname.'</option>'); die();
 
 		  }
 	?>
 		</select>
-
+<!-- 
+		  <option value='7' >Shirt</option>
+		  <option value='8' selected>Hat</option>
+		  <option value='9'>Mug</option>
+		  <option value='10'>Pant</option>
+		  <option value='11'>Key Chain</option>
+		  <option value='12'>Belt</option>
+	 -->
+		<div class='div-product' contentEditable="true">
 			<button type="button" class="btn btn-mini btn-default btn-product"> 
 		  		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 			</button>
@@ -158,19 +177,19 @@
 	
 	<div>
 		<span class='title'>or add new category</span>
-		<input class='display-new' type='text' name='add_cat' placeholder='add new category'>
+		<input class='display-new' type='text' name='add_new_cat' placeholder='add new category'>
 	</div>
 
 	<div>	
 		<span class='title'>Images</span>
-		<input type='file' class='display-upload' name='upload' value='Upload'></button>
+		<input type='file' class='display-upload' name='userfile' size='20'>
 	</div>
 
 	<div class='icons'>
 		<button type="button" class="btn  btn-small btn-default" aria-label="Left Align">
-		  <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
 		</button>
-
+		
 		<div class='hover-images'><img src="../../assets/square.jpg" alt="Hat" height="42" width="42"></div> 
 		</button>
 		<p class='button-text'>img.png</p>
@@ -189,15 +208,11 @@
 	    	<button type="submit" class="btn btn-small btn-default" name='action' value='Cancel'>
 	    	<input type="submit" class="btn btn-small btn-success" name='action' value='Preview' >
 	    	<button type="submit" class="btn btn-small btn-primary" name='action' value='Update'>
-	    	
-	</div>
 
+	    	<!-- <button type="submit" class="btn btn-small btn-primary" value='upload'>Update</button> -->
+	</div>
 
   </form>
 </div>
-</body>
-</html
-
-
 </body>
 </html>
