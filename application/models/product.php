@@ -7,7 +7,9 @@ class product extends CI_Model {
      }
     function get_product_by_id($product_id)
      {
-          return $this->db->query("SELECT * FROM products WHERE id = ?", array($product_id))->row_array();
+        //var_dump($product_id);
+        //var_dump($this->db->query("SELECT * FROM products WHERE id = ?", array($product_id))->row_array());
+        return $this->db->query("SELECT * FROM products WHERE id = ?", array($product_id))->row_array();
      }
      function add_product($product)
      {
