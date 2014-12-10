@@ -38,20 +38,13 @@ class Admin extends CI_Controller {
 	{
 		$this->load->view('display_single_order');
 	}
+
 	public function add()
 	{
 		$product_id = 38; //hard code for now
-		$test = $this->product->get_product_by_id($product_id);		
-		var_dump("hello"); //var_dump($test);  die();
 		$array['product']  = $this->product->get_product_by_id($product_id);	
-    //var_dump($array);  die();
-		$this->session->set_userdata('product_id', $product_id);
-		$this->session->set_userdata('category',array());
-
-		$category  = $this->product->get_all_categories();
-
-		$this->session->set_userdata('category', $category);
-//var_dump($this->session->userdata('category'));  die();	
+		$array['category'] = $this->product->get_all_categories();
+	
 		$this->load->view('add_product', $array);
 
 	}
@@ -59,16 +52,8 @@ class Admin extends CI_Controller {
 	{
 
 		$product_id = 38; //hard code for now
-		
-		$array['product']  = $this->product->get_product_by_id($product_id);
-		//var_dump($array);  die();
-		$this->session->set_userdata('product_id', $product_id);
-		$this->session->set_userdata('category',array());
-
-		$category  = $this->Product->get_all_categories();
-
-		$this->session->set_userdata('category', $category);
-		//var_dump($this->session->userdata('category'));  die();
+		$array['product']  = $this->product->get_product_by_id($product_id);	
+		$array['category'] = $this->product->get_all_categories();
 
 		$this->load->view('edit_product', $array);	
 	}
@@ -76,7 +61,7 @@ class Admin extends CI_Controller {
 	{
 		$this->load->view('delete');
 	}	
-	public function update()
+	public function process()
 	{
 		// $config['upload_path'] = './uploads/';
 		$config['upload_path'] = '././assets/img/';

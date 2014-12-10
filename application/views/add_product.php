@@ -90,12 +90,6 @@
 
 
 	<script type="text/javascript">
-
-<<<<<<< HEAD:application/views/edit_product.php
-
-
-=======
->>>>>>> e86aed8133139632efc80ffa35cf8464bd3673e4:application/views/add_product.php
 	  $(document).ready(function(){
 
 		 	$(".hover-images").hover(
@@ -122,14 +116,14 @@
 <body>
 
 <div id='container'>
-  <h3 id='header-text'>Edit Product - ID <?= $product['id'] ?></h3>
+  <h3 id='header-text'>Add Product - ID <?= $product['id'] ?></h3>
   <button type="button" id='hearder-remove' class="btn btn-small btn-default">
   	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
   </button>
 
 
   <div id='details'>
-   <form action='/admin/update' method='post' enctype="multipart/form-data">
+   <form action='/admin/process' method='post' enctype="multipart/form-data">
 	<div class='name-div'>
 		<div class='name'>	
 			<span class='title'>Name</span>
@@ -148,10 +142,10 @@
 		<span class='title'>Categories</span>
 		<select class='display-cat' name='cat' >
  <?php 		  
-	for($i = count($this->session->userdata('category')) - 1; $i >= 0; $i--)
+	for($i = count($category) - 1; $i >= 0; $i--)
 		  {
-		  	$catname=$this->session->userdata('category')[$i]['name'];
-		  	$catid=$this->session->userdata('category')[$i]['id'];
+		  	$catname=$category[$i]['name'];
+		  	$catid=$category[$i]['id'];
             echo "<option value='".$catid."' >".$catname.'</option>';
 		    // var_dump("<option value='".$catname."' >".$catname.'</option>'); die();
 
@@ -205,9 +199,9 @@
 	</div>
 	
 	<div class='btn-bottom'>
-	    	<button type="submit" class="btn btn-small btn-default" name='action' value='Cancel'>
+	    	<input type="submit" class="btn btn-small btn-default" name='action' value='Cancel'>
 	    	<input type="submit" class="btn btn-small btn-success" name='action' value='Preview' >
-	    	<button type="submit" class="btn btn-small btn-primary" name='action' value='Update'>
+	    	<input type="submit" class="btn btn-small btn-primary" name='action' value='Update'>
 
 	    	<!-- <button type="submit" class="btn btn-small btn-primary" value='upload'>Update</button> -->
 	</div>
