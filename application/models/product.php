@@ -9,16 +9,15 @@ class product extends CI_Model {
      {
          return $this->db->query("SELECT * FROM products")->result_array();
      }
+
      function product_pages($start, $limit)
     {
         $query = "SELECT * FROM products LIMIT {$start}, {$limit}";
         return $this->db->query($query)->result_array();
     }
-    function get_product_by_id($product_id)
+    function get_product_by_id($id)
      {
-        //var_dump($product_id);
-        //var_dump($this->db->query("SELECT * FROM products WHERE id = ?", array($product_id))->row_array());
-        return $this->db->query("SELECT * FROM products WHERE id = ?", array($product_id))->row_array();
+        return $this->db->query("SELECT * FROM products WHERE id = ?", array($id))->row_array();
      }
      function add_product($product)
      {
@@ -59,11 +58,18 @@ class product extends CI_Model {
 
      function get_product_by_category_id($cat_id)
      {
-        // var_dump("model");
-        // var_dump($cat_id);
-        // return $this->db->query("SELECT products.*, products_has_category.category_id FROM products left join products_has_category on products.ID = products_has_category.products_id left join category on category.id=products_has_category.category_id WHERE category.ID = ?", array($cat_id))->result_array();
-
         return $this->db->query("SELECT products.*, products_has_category.category_id FROM products left join products_has_category on products.ID = products_has_category.products_id WHERE products_has_category.category_id = ?", array($cat_id))->result_array();
+     }
+    function get_product_by_product_name($product_name)
+     {
+        return $this->db->query("SELECT * FROM products WHERE name = ?", array($product_name))->result_array();
+     } 
+     function product_pages_id($start, $limit, $cat_id)
+     {
+        $query = "SELECT products.*, products_has_category.category_id FROM products 
+            left join products_has_category on products.ID = products_has_category.products_id 
+            WHERE products_has_category.category_id = {$cat_id} LIMIT {$start}, {$limit}";
+        return $this->db->query($query)->result_array();
      }
      function add_shipping($data)
      {

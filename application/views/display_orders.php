@@ -87,7 +87,7 @@
           <th> Order ID </th>
           <th> Name </th>
           <th> Date </th>
-          <th> Billing Address </th>
+          <th> Shipping Address </th>
           <th> Total </th>
           <th> Status </th>
         </thead>

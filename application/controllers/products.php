@@ -17,38 +17,31 @@ class Products extends CI_Controller {
 	public function index()
 	{
 		// $product_id = 38; //hard code for now
-		$array['name'] = "All";
+		if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
+	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
+	 	$start = ( $page - 1 ) * $limit;
+	 	$array['each_page'] = $this->product->product_pages($start, $limit);
 		$array['product']  = $this->product->get_all_products();	
 		$array['category'] = $this->product->get_all_categories();
-	//var_dump($array); die();
 
 		$this->load->view('category_page', $array);
-	}
-
-	public function prod_details()
-	{
-		$this->load->view('prod_details_page');
-	}
-
-	public function carts()
-	{
-		$this->load->view('carts_page');
 	}
 	public function show($id, $name)
 	 {
 	 	if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
 	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 	 	$start = ( $page - 1 ) * $limit;
-	 	$array['each_page'] = $this->product->product_pages($start, $limit);
-	 	$array['count'] = $this->product->get_all_products();
+		$name = str_replace('%20', ' ', $name);
 		$array['name'] = $name;
 		$array['category'] = $this->product->get_all_categories();
 		if ($id == 'all') {
-			$array['product']  = $array['count'];		
+			$array['product']  = $this->product->get_all_products();
+			$array['each_page'] = $this->product->product_pages($start, $limit);		
 		} else {
-			$array['product']  = $this->product->get_product_by_category_id($id);	
+			$array['product']  = $this->product->get_product_by_category_id($id);
+			$array['each_page'] = $this->product->product_pages_id($start, $limit, $id);	
 		}
-
+	
 		$this->load->view('category_page', $array);
 	}	
 	public function add_shipping()
@@ -65,7 +58,25 @@ class Products extends CI_Controller {
 
 	}
 
-		
+	public function search() {
+		$array['category'] = $this->product->get_all_categories();
+		if (isset($_POST["search-product"])) 
+		{
+			$array['name'] = $_POST["search-product"];
+			$array['product']  = $this->product->get_product_by_product_name($_POST['search-product']);
+			$this->load->view('category_page', $array);
+		}
+	}
+	public function prod_details($prod_id)
+	{
+		$array['product']  = $this->product->get_product_by_id($prod_id);
+		$this->load->view('prod_details_page', $array);
+	}
+
+	public function carts()
+	{
+		$this->load->view('carts_page');
+	}
 }
 
 //end of main controller
