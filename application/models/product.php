@@ -9,6 +9,12 @@ class product extends CI_Model {
      {
          return $this->db->query("SELECT * FROM products")->result_array();
      }
+
+     function product_pages($start, $limit)
+    {
+        $query = "SELECT * FROM products LIMIT {$start}, {$limit}";
+        return $this->db->query($query)->result_array();
+    }
     function get_product_by_id($id)
      {
         return $this->db->query("SELECT * FROM products WHERE id = ?", array($id))->row_array();
@@ -45,9 +51,21 @@ class product extends CI_Model {
      {
         return $this->db->query("SELECT products.*, products_has_category.category_id FROM products left join products_has_category on products.ID = products_has_category.products_id WHERE products_has_category.category_id = ?", array($cat_id))->result_array();
      }
+
      function get_product_by_product_name($product_name)
      {
         return $this->db->query("SELECT * FROM products WHERE name = ?", array($product_name))->result_array();
+     }
+     function add_shipping($data)
+     {
+         $query = "INSERT INTO users (name, street_address, city_state, zipcode, created_at, updated_at) 
+             VALUES(CONCAT('{$data['first_name_ship']}', '{$data['last_name_ship']}'), CONCAT('{$data['address1_ship']}', '{$data['address2_ship']}'), CONCAT('{$data['city_ship']}', '{$data['state_ship']}'), '{$data['zip_ship']}', NOW(), NOW())";
+             return $this->db->query($query);
+     }
+     function check($user)
+     {
+         $query = "SELECT * FROM admin WHERE admin.email = '{$user['email']}' AND admin.password = '{$user['password']}'";
+         return $this->db->query($query)->row_array();
      }
 
 }

@@ -17,11 +17,13 @@
 </style>
 <body>
 	<h2>Admin Login Page</h2>
-
-  <form action='/admin/display' method='post'>    
+<?php
+	echo $this->session->flashdata('error');
+?>
+  <form action='/admin/check' method='post'>    
     <input type='hidden' name='action' value='login' />
-    <p>Email Address:<input type='text' name='email' /></p>
-    <p>Password:<input type='password' name='password' /></p>
+    <p>Email Address:<input type='text' name='email' value="calitexas321@gmail.com" /></p>
+    <p>Password:<input type='password' name='password' value="12345678" /></p>
     <input type='submit' value='Login' class="btn btn-default"/>
   </form>
 

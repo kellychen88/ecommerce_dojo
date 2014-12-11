@@ -193,7 +193,6 @@
 			<?php
 				for($i = count($product) - 1; $i >= 0; $i--)
 				{		
-					// $prod_id=$product[$i]['id'];
 				 	$prod_id=$product[$i]['id'];
 					$prod_name=$product[$i]['name'];
 					$prod_price=$product[$i]['price'];
@@ -201,12 +200,13 @@
 					$sub_path=substr($prod_image, 4, strlen($prod_image)-1);
 
 					echo "<div class='product'>";
+					echo "<a href='/products/prod_details'></a>";
 					echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
 					echo "<p class='price'><span>".$prod_price."</span></p>";
 					echo "<p class='prod_name'>".$prod_name."</p>";
 					echo "</div>"; 
 				}
-			?>
+?>
 
 			</div> <!-- end of main div -->
 	</div>	<!-- end of container main div -->
