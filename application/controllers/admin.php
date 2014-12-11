@@ -25,15 +25,24 @@ class Admin extends CI_Controller {
 	{
 		$this->load->view('admin_login');
 	}
-
-	public function prod_details()
+	public function check()
 	{
-		$this->load->view('prod_details_page');
-	}
+		$user_info['email'] = $this->input->post('email');
+		$user_info['password'] = $this->input->post('password');
+		$user = $this->product->check($user_info);
+		if(isset($user['email']) && $user['email'] == $user_info['email'])
+		{
+			$id = $user['ID'];
+			$this->session->set_userdata('id', $id);
+			$this->load->view('display_orders');
+		}
+		else
+		{
+			$error = "Username/password are NOT registered as admin";
+			$this->session->set_flashdata('error', $error);
+			$this->load->view('admin_login');
+		}	
 
-	public function carts()
-	{
-		$this->load->view('carts_page');
 	}
 	public function display()
 	{
@@ -41,7 +50,13 @@ class Admin extends CI_Controller {
 	}
 	public function products()
 	{
-		$this->load->view('display_products');
+		if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 4;};
+		if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
+		$start = ( $page - 1 ) * $limit;
+		$all_products['products'] = $this->product->product_pages($start, $limit);
+		$all_products['all'] = $this->product->get_all_products();
+		$this->load->view('display_products', $all_products);
+
 	}
 	public function single_order()
 	{
@@ -106,13 +121,8 @@ class Admin extends CI_Controller {
 				$product['cat']=$last_id['LAST_INSERT_ID()'];
 			}
 
-
-			// if (!empty($images)){
-			// 	$img_path=1
-			// }
-
-
 			$product['image_path']=$file_name;
+
 			$this->product->add_product($product);
 
 			// get last inserted product ID and add the category-product relationship

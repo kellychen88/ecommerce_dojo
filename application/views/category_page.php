@@ -139,26 +139,34 @@
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>
-	
+<?php
+
+//var_dump($product);  die();
+?>
 	<div class="container-main">
-		<!-- <div class='row col-md-12 col-xs-12'> -->
-			<!-- <div class='left-sidebar col-xs-2 col-md-2'> -->
 			<div class='left-sidebar'>
 				<input class='' type='text' placeholder='product name'>
 				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 				<h5>Categories</h5>
 				<ul>
-					<li class='category'><a href='#'>Tshirt</a></li>
-					<li class='category'><a href='#'>Shoes</a></li>
-					<li class='category'><a href='#'>Cups</a></li>
-					<li class='category'><a href='#'>Fruits</a></li>
-					<li class='category show-all'><a href='#'>Show All</a></li>
+			 <?php 	
+				for($i = count($category) - 1; $i >= 0; $i--)
+					  {
+					  	$cat_name=$category[$i]['name'];
+					  	$cat_id=$category[$i]['id'];
+			            //echo $catname.'<br>'; echo $catid;
+			            echo "<li class='category'><a href='/products/show/". $cat_id ."/". $cat_name ."'>".$cat_name.'</a></li>';		   
+				}	
+			?>
+					<li class='category show-all'><a href='/products/show/all/Products'>Show All</a></li>
 				</ul>
 			</div> <!-- end of left-sidebar div-->
 			<!-- <div class='main container col-xs-9 col-md-9'> -->
 			<div class='main'>
 				<div class='header'>
-					<h2>Tshirts (Page 2)</h2>
+				<?php
+					echo "<h2>". $name ."(Page 2)</h2>"
+				?>
 					<div class='pages'>
 						<ul>
 							<li><a href='#'>first</a></li>
@@ -177,37 +185,34 @@
 						</div>
 					</div>
 				</div>
+
+<?php
+		for($i = count($product) - 1; $i >= 0; $i--)
+	{		
+		// $prod_id=$product[$i]['id'];
+	 	$prod_id=$product[$i]['id'];
+		$prod_name=$product[$i]['name'];
+		$prod_price=$product[$i]['price'];
+		// $prod_image=$product[$i]['image_path'];
+		// $sub_path=substr($prod_image, 4, strlen($prod_image)-1);
+		//var_dump($sub_path);
+
+		echo "<div class='product'>";
+		echo "<a href='/products/prod_details'></a>";
+		// echo "<a href='/products/prod_details'><img src='../../".$sub_path."'></a>";
+		echo "<p class='price'><span>".$prod_price."</span></p>";
+		echo "<p class='prod_name'>".$prod_name."</p>";
+		echo "</div>"; 
+	}
+
+?>
+<!-- 
 				<div class='product'>
 					<a href='/products/prod_details'><img src="../../assets/demo_img.jpg"></a>
 					<p class='price' id=''><span>$19.99</span></p>
 					<p class='prod_name'>Black Belt</p>
-				</div>
-				<div class='product'>
-					<a href='/products/prod_details'><img src="../../assets/demo_img.jpg"></a>
-					<p class='price' id=''><span>$19.99</span></p>
-					<p class='prod_name'>Black Belt</p>
-				</div>
-				<div class='product'>
-					<a href='/products/prod_details'><img src="../../assets/demo_img.jpg"></a>
-					<p class='price' id=''><span>$19.99</span></p>
-					<p class='prod_name'>Black Belt</p>
-				</div>
-				<div class='product'>
-					<a href='/products/prod_details'><img src="../../assets/demo_img.jpg"></a>
-					<p class='price' id=''><span>$19.99</span></p>
-					<p class='prod_name'>Black Belt</p>
-				</div>
-				<div class='product'>
-					<a href='/products/prod_details'><img src="../../assets/demo_img.jpg"></a>
-					<p class='price' id=''><span>$19.99</span></p>
-					<p class='prod_name'>Black Belt</p>
-				</div>
-				<div class='product'>
-					<a href='/products/prod_details'><img src="../../assets/demo_img.jpg"></a>
-					<p class='price' id=''><span>$19.99</span></p>
-					<p class='prod_name'>Black Belt</p>
-				</div>
-			<!-- </div> -->
+				</div>  -->
+
 			</div> <!-- end of main div -->
 	</div>	<!-- end of container main div -->
 

@@ -171,7 +171,7 @@ if(isset($error))
 <body>
 
 <div id='container'>
-	<h3 id='header-text'>Add Product</h3>
+	<h3 id='header-text'>Edit Product</h3>
 
   	<button type="button" class="btn btn-remove btn-small btn-default">
   		<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>

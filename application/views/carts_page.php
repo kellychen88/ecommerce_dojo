@@ -135,7 +135,7 @@
 		</div> <!-- end of "cart-table" div -->
 		<div class='information'>
 			<h2 class='row shipping col-md-12 col-xs-12'>Shipping Information</h2>
-			<form role="form" action='/user_main/pay'>
+			<form role="form" action='/products/add_shipping' method='post'>
 				<div class="form-group row">
 			  		<div class='col-md-2 col-xs-2'><label>First Name: </label></div>
 			    	<div class='col-md-4 col-xs-4'><input type="text" class="form-control" name="first_name_ship" placeholder="Enter first name"></div>
@@ -152,6 +152,18 @@
 			  		<div class='col-md-2 col-xs-2'><label>Address 2: </label></div>
 					<div class='col-md-4 col-xs-4'><input type="text" class="form-control" name="address2_ship" placeholder="Enter address"></div>
 			  	</div>
+		  		<div class="form-group row">
+		  	  		<div class='col-md-2 col-xs-2'><label>City: </label></div>
+		  			<div class='col-md-4 col-xs-4'><input type="text" class="form-control" name="city_ship" placeholder="Enter city"></div>
+		  	  	</div>
+		  		<div class="form-group row">
+		  	  		<div class='col-md-2 col-xs-2'><label>State: </label></div>
+		  			<div class='col-md-4 col-xs-4'><input type="text" class="form-control" name="state_ship" placeholder="Enter state"></div>
+		  	  	</div>
+	  	  		<div class="form-group row">
+	  	  	  		<div class='col-md-2 col-xs-2'><label>Zipcode: </label></div>
+	  	  			<div class='col-md-4 col-xs-4'><input type="number" class="form-control" name="zip_ship" placeholder="Enter zipcode"></div>
+	  	  	  	</div>
 			  	<h2 class='row row-spacing col-md-12 col-xs-12'>Billing Information</h2>
 			  	<div class="form-group row" id='checkbox'>
 			  		<div class="col-md-2 col-xs-2">
