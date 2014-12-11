@@ -44,13 +44,14 @@
 
 		}
 		.main {
-			display: inline-block; vertical-align: top; 
 			display: block;
 			margin-top: -10px; width:400px;
 			/*border: 1px solid gray;*/
 			white-space: normal;
 			margin-left: 258px;
-			margin-top: -100px;
+			margin-top: -15%;
+			width:75%;
+			padding:0px 20px;
 
 		}
 		.show-all{
@@ -82,32 +83,21 @@
 			padding-right:10px;
 		}
 		.prod_name{font-size: 20px; margin-bottom: 20px;}
-		.main{
-			width:900px;
-			padding:0px 20px;
-		}
 		.header{
 			display:inline-block;
 			vertical-align: top;
-			width: 800px;
+			width: 75%;
 		}
-	
-
-		
-		.sort{margin: 10px 0px 10px 53px;}
-		.sort{
-			float:right;
+		.header>h2{
+			margin-left: 8px;
 		}
 		.sort{
-			display: inline-block;
+			/*float:right;*/
 		}
 		.pagination
 		{
-			position:absolute;
-			margin-top: -40px;
-			display:inline-block;
-			margin-right: 10%;
-			margin-left: 665px;
+			width: auto;
+			display: inline-block;
 		}
 	</style>
 </head>
@@ -149,12 +139,9 @@
 	<div class="container-main">
 			<div class='left-sidebar'>
 				<form name='search' action='/products/search' method='post'>
-					<input class='' type='text' name='search-product' placeholder='product name'>
-				      <!-- <span><a href="/products/show/" class="glyphicon glyphicon-search" role="button"></a></span>  -->
-				    <span><input type="submit" class="glyphicon glyphicon-search" name='search'></span>
+					<input class='' type='text' name='search-product'>
+				    <span class='glyphicon glyphicon-search'> <input type="submit" name='search' class='hidden'></span>
 				</form>
-				      	<!-- <a href="#" class="btn btn-default" role="button">Button</a></p> -->
-				<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span> -->
 				<h5>Categories</h5>
 				<ul>
 			 <?php 	
@@ -168,8 +155,8 @@
 					<li class='category show-all'><a href='/products/show/all/All Products'>Show All</a></li>
 				</ul>
 			</div>
-			<div class='header'>
-				<h2> 
+			<div class='header' >
+				<h2 class="col-sm-6 col-md-6"> 
 <?php 				
 					if(isset($name))
 						{
@@ -190,7 +177,7 @@
 ?>
 					(page <?=$page?>)
 				</h2>
-			    <nav>
+			    <nav class="col-sm-6 col-md-4">
 <?php
 			      $this_total = count($product);
 			      if($this->input->get('limit')){$this_limit = $this->input->get('limit');}else{$this_limit = 8;};
@@ -201,7 +188,7 @@
 			      $class = "";
 
 ?>
-			      <ul class = "pagination">
+			      <ul class = "pagination  col-sm-2 col-md-2">
 			          <li class="<?php if($page == 1){echo 'disabled';}?>">
 			          <a href= "?limit=<?=$this_limit?>&page=<?=($page-1)?>">&laquo;</a>
 			        </li>
