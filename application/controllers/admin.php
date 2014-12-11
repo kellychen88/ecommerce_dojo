@@ -70,15 +70,23 @@ class Admin extends CI_Controller {
 		$this->load->view('add_product', $array);
 
 	}
-	public function edit()
+	public function edit($product_id)
 	{
 
-		$product_id = 38; //hard code for now
 		$array['product']  = $this->product->get_product_by_id($product_id);	
 		$array['category'] = $this->product->get_all_categories();
+		$array['category_id'] = $this->product->get_cat_id_by_product_id($product_id);
+		$array['images']=$this->product->get_all_images_by_id($product_id);
 
 		$this->load->view('edit_product', $array);	
 	}
+
+	public function delete_img($img_id)
+	{
+		var_dump($img_id);
+		// delete function
+	}
+
 	public function delete()
 	{
 		$this->load->view('delete');
@@ -104,11 +112,6 @@ class Admin extends CI_Controller {
 
 			// upload file
 			$data = array('upload_data' => $this->upload->data());
-
-			var_dump($product);
-			var_dump($data);
-			die();
-
 			$file_name='././assets/img/'.$data['upload_data']['file_name'];
 
 			// check if new category is added. If so, then use that new cat_id instead

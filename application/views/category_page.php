@@ -33,6 +33,7 @@
 		.container-main{
     		white-space: nowrap;
     		max-width: 99%;
+    		width: 1500px;
     		}
 		.left-sidebar{
 			/*width: 230px; */
@@ -40,12 +41,16 @@
 			border:1px solid gray; padding:10px;
 			margin-left:10px;
 			margin-top: 10px;
+
 		}
 		.main {
 			display: inline-block; vertical-align: top; 
+			display: block;
 			margin-top: -10px; width:400px;
 			/*border: 1px solid gray;*/
 			white-space: normal;
+			margin-left: 258px;
+			margin-top: -100px;
 
 		}
 		.show-all{
@@ -81,30 +86,29 @@
 			width:900px;
 			padding:0px 20px;
 		}
-
-		.header h2, .pages{vertical-align: top;}
-
-		.pages{
-			margin-left:350px;
-			margin-top:20px;
-		}
-		.pages, h2{
+		.header{
 			display:inline-block;
+			vertical-align: top;
+			width: 800px;
 		}
-		.pages ul{
-			list-style-type: none;
-		}
-		.pages ul li{
-			border-right:1px solid gray;
-			display: inline-block;
-			padding: 0px 15px;
-		}
-		.pages ul li:last-child{
-			border-right:none;
-		}
+	
+
+		
 		.sort{margin: 10px 0px 10px 53px;}
-		.sort p, .sort form, .sort-form {display: inline-block;}
-		.sort-form{margin-left:10px;}
+		.sort{
+			float:right;
+		}
+		.sort{
+			display: inline-block;
+		}
+		.pagination
+		{
+			position:absolute;
+			margin-top: -40px;
+			display:inline-block;
+			margin-right: 10%;
+			margin-left: 665px;
+		}
 	</style>
 </head>
 <body>
@@ -141,7 +145,6 @@
 	</nav>
 <?php
 
-
 ?>
 	<div class="container-main">
 			<div class='left-sidebar'>
@@ -162,53 +165,106 @@
 			            echo "<li class='category'><a href='/products/show/". $cat_id ."/". $cat_name ."'>".$cat_name.'</a></li>';		   
 				}	
 			?>
-					<li class='category show-all'><a href='/products/show/all/Products'>Show All</a></li>
+					<li class='category show-all'><a href='/products/show/all/All Products'>Show All</a></li>
 				</ul>
-			</div> <!-- end of left-sidebar div-->
-			<!-- <div class='main container col-xs-9 col-md-9'> -->
-			<div class='main'>
-				<div class='header'>
-				<?php
-					echo "<h2>". $name ."(Page 2)</h2>"
-				?>
-					<div class='pages'>
-						<ul>
-							<li><a href='#'>first</a></li>
-							<li><a href='#'>prev</a></li>
-							<li>2</li>
-							<li><a href='#'>next</a></li>
-						</ul>
-						<div class='sort'>
-							<p>Sorted by </p>
-							<form>
-								<select class='sort-form'>
-									<option value='sort_price'>Price</option>
-									<option value='sort_popular'>Most Popular</option>
-								</select>
-							</form>
-						</div>
-					</div>
-				</div>
-
-			<?php
-				for($i = count($product) - 1; $i >= 0; $i--)
-				{		
-				 	$prod_id=$product[$i]['id'];
-					$prod_name=$product[$i]['name'];
-					$prod_price=$product[$i]['price'];
-					$prod_image=$product[$i]['main_path'];
-					$sub_path=substr($prod_image, 4, strlen($prod_image)-1);
-
-					echo "<div class='product'>";
-					echo "<a href='/products/prod_details'></a>";
-					echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
-					echo "<p class='price'><span>".$prod_price."</span></p>";
-					echo "<p class='prod_name'>".$prod_name."</p>";
-					echo "</div>"; 
-				}
+			</div>
+			<div class='header'>
+				<h2> 
+<?php 				
+					if(isset($name))
+						{
+							echo $name;
+						}
+						else
+						{
+							echo "All Products";
+						}
+					if($this->input->get('page'))
+						{ 
+							$page = $this->input->get('page');
+						}
+						else
+						{
+							$page = 1;
+						}
 ?>
+					(page <?=$page?>)
+				</h2>
+			    <nav>
+<?php
+			      $this_total = count($product);
+			      if($this->input->get('limit')){$this_limit = $this->input->get('limit');}else{$this_limit = 8;};
+			      if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
+			      $last = ceil( $this_total / $this_limit );
+			      $start = 1;
+			      $end = $last;
+			      $class = "";
 
-			</div> <!-- end of main div -->
+?>
+			      <ul class = "pagination">
+			          <li class="<?php if($page == 1){echo 'disabled';}?>">
+			          <a href= "?limit=<?=$this_limit?>&page=<?=($page-1)?>">&laquo;</a>
+			        </li>
+<?php      
+			      if ( $start > 1 ) 
+			      {
+?>        
+			          <li><a href="?limit=<?=$this_limit?>&page=1">1</a></li>
+			          <li class="disabled"><span>...</span></li>
+<?php          
+			      }
+			      
+			      for ( $i = $start ; $i <= $end; $i++ ) 
+			      {
+			          if( $page == $i ){ $class = "active"; }
+?>          
+			          <li class="'<?=$class?>'"><a href="?limit=<?=$this_limit?>&page=<?=$i?>"><?= $i ?></a></li>
+<?php          
+			      }
+			      
+			      if ( $end < $last )
+			       {
+?>        
+			          <li class="disabled"><span>...</span></li>
+			          <li><a href="?limit='<?=$this_limit?>'&page=<?=$last?>"><?=$last?></a></li>
+<?php          
+			      }
+?>
+					  <li class="<?php if( $page == $last ){echo 'disabled';}?>">
+			          <a href= "?limit=<?=$this_limit?>&page=<?=($page+1)?>">&raquo;</a></li>   
+			      </ul>
+			   	</nav>	
+		
+				<div class='sort'>
+					<p>Sorted by </p>
+					<form>
+						<select class='sort-form'>
+							<option value='sort_price'>Price</option>
+							<option value='sort_popular'>Most Popular</option>
+						</select>
+					</form>
+				</div> 
+		   	</div> 
+		<div class="main">   	
+<?php		   	
+		   	for($i = count($each_page) - 1; $i >= 0; $i--)
+		   	{		
+		   	 	$prod_id=$each_page[$i]['id'];
+		   		$prod_name=$each_page[$i]['name'];
+		   		$prod_price=$each_page[$i]['price'];
+		   		// $prod_image=$product[$i]['main_path'];
+		   		// $sub_path=substr($prod_image, 4, strlen($prod_image)-1);
+
+		   		echo "<div class='product'>";
+		   		echo "<a href='/products/prod_details'></a>";
+		   		// echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
+		   		echo "<p class='price'><span>".$prod_price."</span></p>";
+		   		echo "<p class='prod_name'>".$prod_name."</p>";
+		   		echo "</div>"; 
+		   	}			
+?>
+		</div> <!-- end of main div -->
+
 	</div>	<!-- end of container main div -->
 
 

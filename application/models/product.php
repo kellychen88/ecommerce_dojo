@@ -47,14 +47,29 @@ class product extends CI_Model {
      {
         return $this->db->query("SELECT * FROM products WHERE id = ?", array($cat_id))->row_array();
      }
+
+     function get_cat_id_by_product_id($prod_id){
+        return $this->db->query("SELECT category_id FROM products_has_category WHERE products_id = ?", array($prod_id))->row_array();
+     }
+
+     function get_all_images_by_id($prod_id){
+        return $this->db->query("SELECT * FROM images WHERE product_id = ?", array($prod_id))->result_array();        
+     }
+
      function get_product_by_category_id($cat_id)
      {
         return $this->db->query("SELECT products.*, products_has_category.category_id FROM products left join products_has_category on products.ID = products_has_category.products_id WHERE products_has_category.category_id = ?", array($cat_id))->result_array();
      }
-
-     function get_product_by_product_name($product_name)
+    function get_product_by_product_name($product_name)
      {
         return $this->db->query("SELECT * FROM products WHERE name = ?", array($product_name))->result_array();
+     } 
+     function product_pages_id($start, $limit, $cat_id)
+     {
+        $query = "SELECT products.*, products_has_category.category_id FROM products 
+            left join products_has_category on products.ID = products_has_category.products_id 
+            WHERE products_has_category.category_id = {$cat_id} LIMIT {$start}, {$limit}";
+        return $this->db->query($query)->result_array();
      }
      function add_shipping($data)
      {
@@ -67,8 +82,14 @@ class product extends CI_Model {
          $query = "SELECT * FROM admin WHERE admin.email = '{$user['email']}' AND admin.password = '{$user['password']}'";
          return $this->db->query($query)->row_array();
      }
+
      function get_image_by_id($prod_id)
      {
         return $this->db->query("SELECT image_path FROM images WHERE product_id = ?", array($prod_id))->result_array();
+     }
+     function delete_img($img)
+     {
+        $query = "DELETE FROM images WHERE images = '{$img}'";
+        return $this->db->query($query);   
      }
 }
