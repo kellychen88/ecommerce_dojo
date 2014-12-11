@@ -43,5 +43,13 @@ class product extends CI_Model {
      {
         return $this->db->query("SELECT * FROM products WHERE id = ?", array($cat_id))->row_array();
      }
+     function get_product_by_category_id($cat_id)
+     {
+        // var_dump("model");
+        // var_dump($cat_id);
+        // return $this->db->query("SELECT products.*, products_has_category.category_id FROM products left join products_has_category on products.ID = products_has_category.products_id left join category on category.id=products_has_category.category_id WHERE category.ID = ?", array($cat_id))->result_array();
+
+        return $this->db->query("SELECT products.*, products_has_category.category_id FROM products left join products_has_category on products.ID = products_has_category.products_id WHERE products_has_category.category_id = ?", array($cat_id))->result_array();
+     }
 
 }
