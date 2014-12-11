@@ -67,5 +67,8 @@ class product extends CI_Model {
          $query = "SELECT * FROM admin WHERE admin.email = '{$user['email']}' AND admin.password = '{$user['password']}'";
          return $this->db->query($query)->row_array();
      }
-
+     function get_image_by_id($prod_id)
+     {
+        return $this->db->query("SELECT image_path FROM images WHERE product_id = ?", array($prod_id))->result_array();
+     }
 }

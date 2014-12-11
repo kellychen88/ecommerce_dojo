@@ -17,7 +17,7 @@ class Products extends CI_Controller {
 	public function index()
 	{
 		// $product_id = 38; //hard code for now
-		$array['name'] = "All";
+		$array['name'] = "Products";
 		$array['product']  = $this->product->get_all_products();	
 		$array['category'] = $this->product->get_all_categories();
 
@@ -66,6 +66,7 @@ class Products extends CI_Controller {
 	public function prod_details($prod_id)
 	{
 		$array['product']  = $this->product->get_product_by_id($prod_id);
+		$array['image']  = $this->product->get_image_by_id($prod_id);
 		$this->load->view('prod_details_page', $array);
 	}
 
