@@ -51,10 +51,16 @@ class product extends CI_Model {
      {
         return $this->db->query("SELECT products.*, products_has_category.category_id FROM products left join products_has_category on products.ID = products_has_category.products_id WHERE products_has_category.category_id = ?", array($cat_id))->result_array();
      }
-
-     function get_product_by_product_name($product_name)
+    function get_product_by_product_name($product_name)
      {
         return $this->db->query("SELECT * FROM products WHERE name = ?", array($product_name))->result_array();
+     } 
+     function product_pages_id($start, $limit, $cat_id)
+     {
+        $query = "SELECT products.*, products_has_category.category_id FROM products 
+            left join products_has_category on products.ID = products_has_category.products_id 
+            WHERE products_has_category.category_id = {$cat_id} LIMIT {$start}, {$limit}";
+        return $this->db->query($query)->result_array();
      }
      function add_shipping($data)
      {
