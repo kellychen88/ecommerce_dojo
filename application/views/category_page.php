@@ -141,12 +141,17 @@
 	</nav>
 <?php
 
-//var_dump($product);  die();
+
 ?>
 	<div class="container-main">
 			<div class='left-sidebar'>
-				<input class='' type='text' placeholder='product name'>
-				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+				<form name='search' action='/products/search' method='post'>
+					<input class='' type='text' name='search-product' placeholder='product name'>
+				      <!-- <span><a href="/products/show/" class="glyphicon glyphicon-search" role="button"></a></span>  -->
+				    <span><input type="submit" class="glyphicon glyphicon-search" name='search'></span>
+				</form>
+				      	<!-- <a href="#" class="btn btn-default" role="button">Button</a></p> -->
+				<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span> -->
 				<h5>Categories</h5>
 				<ul>
 			 <?php 	
@@ -154,7 +159,6 @@
 					  {
 					  	$cat_name=$category[$i]['name'];
 					  	$cat_id=$category[$i]['id'];
-			            //echo $catname.'<br>'; echo $catid;
 			            echo "<li class='category'><a href='/products/show/". $cat_id ."/". $cat_name ."'>".$cat_name.'</a></li>';		   
 				}	
 			?>
@@ -186,31 +190,23 @@
 					</div>
 				</div>
 
-<?php
-		for($i = count($product) - 1; $i >= 0; $i--)
-	{		
-		// $prod_id=$product[$i]['id'];
-	 	$prod_id=$product[$i]['id'];
-		$prod_name=$product[$i]['name'];
-		$prod_price=$product[$i]['price'];
-		$prod_image=$product[$i]['image_path'];
-		$sub_path=substr($prod_image, 4, strlen($prod_image)-1);
-		//var_dump($sub_path);
+			<?php
+				for($i = count($product) - 1; $i >= 0; $i--)
+				{		
+					// $prod_id=$product[$i]['id'];
+				 	$prod_id=$product[$i]['id'];
+					$prod_name=$product[$i]['name'];
+					$prod_price=$product[$i]['price'];
+					$prod_image=$product[$i]['main_path'];
+					$sub_path=substr($prod_image, 4, strlen($prod_image)-1);
 
-		echo "<div class='product'>";
-		echo "<a href='/products/prod_details'><img src='../../".$sub_path."'></a>";
-		echo "<p class='price'><span>".$prod_price."</span></p>";
-		echo "<p class='prod_name'>".$prod_name."</p>";
-		echo "</div>"; 
-	}
-
-?>
-<!-- 
-				<div class='product'>
-					<a href='/products/prod_details'><img src="../../assets/demo_img.jpg"></a>
-					<p class='price' id=''><span>$19.99</span></p>
-					<p class='prod_name'>Black Belt</p>
-				</div>  -->
+					echo "<div class='product'>";
+					echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
+					echo "<p class='price'><span>".$prod_price."</span></p>";
+					echo "<p class='prod_name'>".$prod_name."</p>";
+					echo "</div>"; 
+				}
+			?>
 
 			</div> <!-- end of main div -->
 	</div>	<!-- end of container main div -->

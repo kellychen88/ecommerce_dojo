@@ -19,22 +19,11 @@ class Products extends CI_Controller {
 		$array['name'] = "All";
 		$array['product']  = $this->product->get_all_products();	
 		$array['category'] = $this->product->get_all_categories();
-	//var_dump($array); die();
 
 		$this->load->view('category_page', $array);
 	}
-
-	public function prod_details()
+	public function show($id, $name) 
 	{
-		$this->load->view('prod_details_page');
-	}
-
-	public function carts()
-	{
-		$this->load->view('carts_page');
-	}
-	public function show($id, $name) {
-	//var_dump($name);
 		$array['name'] = $name;
 		$array['category'] = $this->product->get_all_categories();
 
@@ -43,8 +32,27 @@ class Products extends CI_Controller {
 		} else {
 			$array['product']  = $this->product->get_product_by_category_id($id);	
 		}
-			//var_dump($array); 
+ 
 		$this->load->view('category_page', $array);
+	}
+	public function search() {
+		$array['category'] = $this->product->get_all_categories();
+		if (isset($_POST["search-product"])) 
+		{
+			$array['name'] = $_POST["search-product"];
+			$array['product']  = $this->product->get_product_by_product_name($_POST['search-product']);
+			$this->load->view('category_page', $array);
+		}
+	}
+	public function prod_details($prod_id)
+	{
+		$array['product']  = $this->product->get_product_by_id($prod_id);
+		$this->load->view('prod_details_page', $array);
+	}
+
+	public function carts()
+	{
+		$this->load->view('carts_page');
 	}
 }
 

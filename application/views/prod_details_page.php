@@ -97,12 +97,15 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
+<?php 
+		$prod_image=$product['main_path'];
+		$sub_path=substr($prod_image, 4, strlen($prod_image)-1);
+?>
 <div class='container-main'>
 	<div class='left-section'>
-		<a href="#">Go Back</a>
-		<h1>Black Belt for Staff</h1>
-		<img class='main-img' src='../../assets/demo_img.jpg'>
+		<a href='/product/show/<?=$product['id'] ?>/<?=$product['name'] ?>  '>Go Back</a>
+		<h1><?= $product['name'] ?></h1>
+		<img class='main-img' src='../../<?= $sub_path ?> '>
 		<div class='thumbnail1'>
 			<a><img class='thumbnail-img' src='../../assets/demo_img.jpg'></a>
 			<a><img class='thumbnail-img' src='../../assets/demo_img.jpg'></a>
@@ -112,7 +115,7 @@
 		</div>
 	</div>
 	<div class='right-section'>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus voluptate at soluta ex blanditiis eius veritatis fuga nam animi, ratione facilis accusantium, neque? Alias eligendi sequi culpa, enim, nemo natus!lorem Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente nostrum eaque et quam beatae mollitia molestias, voluptate ipsum natus praesentium quia provident itaque commodi a, unde vel pariatur vero adipisci. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, totam, impedit. Excepturi quibusdam beatae inventore odit unde accusamus autem, quisquam necessitatibus nam qui illo officiis, eveniet nostrum porro rerum, molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, quis vitae rem inventore ut distinctio repellat est maiores dolorem, consequuntur obcaecati dolor quae eaque tempore amet ducimus non maxime dolorum.</p>
+		<p><?=$product['description'] ?> </p>		<!-- <p>voluptate ipsum natus praesentium quia provident itaque commodi a, unde vel pariatur vero adipisci. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, totam, impedit. Excepturi quibusdam beatae inventore odit unde accusamus autem, quisquam necessitatibus nam qui illo officiis, eveniet nostrum porro rerum, molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, quis vitae rem inventore ut distinctio repellat est maiores dolorem, consequuntur obcaecati dolor quae eaque tempore amet ducimus non maxime dolorum.</p> -->
 		<form>
 			<div class='form-group buy-qty'>
 				<select class='form-control select-qty' name='qty'>
