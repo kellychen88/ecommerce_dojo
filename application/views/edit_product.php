@@ -9,7 +9,7 @@ if(isset($error))
 	// var_dump($product);
 	// var_dump($category_id);
 	// var_dump($category);
-	var_dump($images);
+	//var_dump($images);
 ?>
 
 <!DOCTYPE html>
@@ -193,7 +193,7 @@ if(isset($error))
   		<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
   	</button>
 	<div id='details'>
-   		<form action='/admin/process' method='post' enctype="multipart/form-data">
+   		<form action='/admin/edit_action' method='post' enctype="multipart/form-data">
 			<div class='name-div'>
 				<div class='name'>	
 					<span class='title'>Name</span>

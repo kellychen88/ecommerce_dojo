@@ -15,6 +15,7 @@
 
 	<script type="text/javascript">
 <?php
+	echo "in preview page";
 	var_dump($product); die();
 ?>
 

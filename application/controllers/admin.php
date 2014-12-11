@@ -134,6 +134,24 @@ class Admin extends CI_Controller {
 			redirect('/admin/add');
 		// }
 	}
+	public function edit_action()
+	{
+		//echo $this->input->post('action');
+
+		if($this->input->post('action') == 'Cancel') 
+  		{
+  			redirect('/admin/products');
+  		} elseif ($this->input->post('action') == 'Preview') {
+  	
+			$array['product']=$this->input->post();
+			
+  			//var_dump($array); //die();
+
+  			$this->load->view('preview_product', $array);
+  		} elseif ($this->input->post('action') == 'Update') {
+  			echo "Go to update page";
+  		}
+	}
 }
 
 //end of main controller

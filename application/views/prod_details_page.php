@@ -103,7 +103,7 @@
 ?>
 <div class='container-main'>
 	<div class='left-section'>
-		<a href='/product/show/<?=$product['id'] ?>/<?=$product['name']?> '>Go Back</a>
+		<a href='/products/show/<?=$category['id'] ?>/<?=$category['name'] ?> '>Go Back</a>
 		<h1><?= $product['name'] ?></h1>
 		<img class='main-img' src='../../<?= $main_subpath ?> '>
 		<div class='thumbnail1'>
@@ -118,8 +118,8 @@
 	</div>
 	<div class='right-section'>
 		<p><?=$product['description'] ?> </p>		<!-- <p>voluptate ipsum natus praesentium quia provident itaque commodi a, unde vel pariatur vero adipisci. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, totam, impedit. Excepturi quibusdam beatae inventore odit unde accusamus autem, quisquam necessitatibus nam qui illo officiis, eveniet nostrum porro rerum, molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, quis vitae rem inventore ut distinctio repellat est maiores dolorem, consequuntur obcaecati dolor quae eaque tempore amet ducimus non maxime dolorum.</p> -->
-		<form>
-			<div class='form-group buy-qty'>
+		<form action='/admin/products' name='buy' method='post'>
+			<div class='form-group buy-qty' name='buy' method='post'>
 				<select class='form-control select-qty' name='qty'>
 					<option value="1">1 (<?= $product['price'] ?>)</option>
 					<option value="2">2 (<?= $product['price']*2 ?>)</option>

@@ -17,11 +17,8 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 	<!-- // <script type="text/javascript" scr="scripts/bootstrap/js/bootstrap.min.js"></script> -->
 	<script type="text/javascript">
-
 		$(document).ready(function(){
-			$(".sort-form").change(function() {
-			var select = $(".sort-form option:selected").val();
-			alert(select);
+
 		});
 	</script>
 	<style type="text/css">
@@ -31,7 +28,7 @@
 		    border-color: #E7E7E7;
 		}
 		body{
-			padding: 30px;
+			padding: 70px;
 		}
 		.container-main{
     		white-space: nowrap;
@@ -47,14 +44,13 @@
 
 		}
 		.main {
+			display: inline-block; vertical-align: top; 
 			display: block;
 			margin-top: -10px; width:400px;
 			/*border: 1px solid gray;*/
 			white-space: normal;
 			margin-left: 258px;
-			margin-top: -15%;
-			width:75%;
-			padding:0px 20px;
+			margin-top: -100px;
 
 		}
 		.show-all{
@@ -86,21 +82,32 @@
 			padding-right:10px;
 		}
 		.prod_name{font-size: 20px; margin-bottom: 20px;}
+		.main{
+			width:900px;
+			padding:0px 20px;
+		}
 		.header{
 			display:inline-block;
 			vertical-align: top;
-			width: 75%;
+			width: 800px;
 		}
-		.header>h2{
-			margin-left: 8px;
+	
+
+		
+		.sort{margin: 10px 0px 10px 53px;}
+		.sort{
+			float:right;
 		}
 		.sort{
-			/*float:right;*/
+			display: inline-block;
 		}
 		.pagination
 		{
-			width: auto;
-			display: inline-block;
+			position:absolute;
+			margin-top: -40px;
+			display:inline-block;
+			margin-right: 10%;
+			margin-left: 665px;
 		}
 	</style>
 </head>
@@ -142,9 +149,12 @@
 	<div class="container-main">
 			<div class='left-sidebar'>
 				<form name='search' action='/products/search' method='post'>
-					<input class='' type='text' name='search-product'>
-				    <span class='glyphicon glyphicon-search'> <input type="submit" name='search' class='hidden'></span>
+					<input class='' type='text' name='search-product' placeholder='product name'>
+				      <!-- <span><a href="/products/show/" class="glyphicon glyphicon-search" role="button"></a></span>  -->
+				    <span><input type="submit" class="glyphicon glyphicon-search" name='search'></span>
 				</form>
+				      	<!-- <a href="#" class="btn btn-default" role="button">Button</a></p> -->
+				<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span> -->
 				<h5>Categories</h5>
 				<ul>
 			 <?php 	
@@ -158,8 +168,8 @@
 					<li class='category show-all'><a href='/products/show/all/All Products'>Show All</a></li>
 				</ul>
 			</div>
-			<div class='header' >
-				<h2 class="col-sm-6 col-md-6"> 
+			<div class='header'>
+				<h2> 
 <?php 				
 					if(isset($name))
 						{
@@ -180,14 +190,9 @@
 ?>
 					(page <?=$page?>)
 				</h2>
-			    <nav class="col-sm-6 col-md-4">
+			    <nav>
 <?php
-			      if(isset($product)){
-			      	$this_total = count($product);
-
-			      } else {
-			      	$this_total = count($each_page);
-			      }
+			      $this_total = count($product);
 			      if($this->input->get('limit')){$this_limit = $this->input->get('limit');}else{$this_limit = 8;};
 			      if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 			      $last = ceil( $this_total / $this_limit );
@@ -196,7 +201,7 @@
 			      $class = "";
 
 ?>
-			      <ul class = "pagination  col-sm-2 col-md-2">
+			      <ul class = "pagination">
 			          <li class="<?php if($page == 1){echo 'disabled';}?>">
 			          <a href= "?limit=<?=$this_limit?>&page=<?=($page-1)?>">&laquo;</a>
 			        </li>
@@ -232,8 +237,8 @@
 		
 				<div class='sort'>
 					<p>Sorted by </p>
-					<form action='/products/sort' method='post'>
-						<select name='sort' class='sort-form'>
+					<form>
+						<select class='sort-form'>
 							<option value='sort_price'>Price</option>
 							<option value='sort_popular'>Most Popular</option>
 						</select>
@@ -247,14 +252,14 @@
 		   	 	$prod_id=$each_page[$i]['id'];
 		   		$prod_name=$each_page[$i]['name'];
 		   		$prod_price=$each_page[$i]['price'];
-		   		   $prod_image=$product[$i]['main_path'];
-		   		   $sub_path=substr($prod_image, 4, strlen($prod_image)-1);
+		   		// $prod_image=$product[$i]['main_path'];
+		   		// $sub_path=substr($prod_image, 4, strlen($prod_image)-1);
 
 		   		echo "<div class='product'>";
 		   		echo "<a href='/products/prod_details'></a>";
-		   		   echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
+		   		// echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
 		   		echo "<p class='price'><span>".$prod_price."</span></p>";
-		   		echo "<a href='/products/prod_details/$prod_id'><p class='prod_name'>".$prod_name."</p></a>";
+		   		echo "<p class='prod_name'>".$prod_name."</p>";
 		   		echo "</div>"; 
 		   	}			
 ?>
