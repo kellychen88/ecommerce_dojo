@@ -9,6 +9,15 @@ class Admin extends CI_Controller {
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
 		date_default_timezone_set('America/Los_Angeles'); 
+
+		// File configs
+		$config['upload_path'] = '././assets/img/';
+		$config['allowed_types'] = 'gif|jpeg|png|jpg';
+		$config['max_size']	= '500';
+		$config['max_width']  = '1024';
+		$config['max_height']  = '768';
+		$this->load->library('upload', $config);
+
 		$this->output->enable_profiler();		
 	}
 
@@ -41,11 +50,8 @@ class Admin extends CI_Controller {
 
 	public function add()
 	{
-		$product_id = 38; //hard code for now
-		$array['product']  = $this->product->get_product_by_id($product_id);	
+		// $array['product']  = $this->product->get_product_by_id($product_id);	
 		$array['category'] = $this->product->get_all_categories();
-		// var_dump($array);
-		// die();
 		$this->load->view('add_product', $array);
 
 	}
@@ -64,29 +70,32 @@ class Admin extends CI_Controller {
 	}	
 	public function process()
 	{
-		// $config['upload_path'] = './uploads/';
-		$config['upload_path'] = '././assets/img/';
-		$config['allowed_types'] = 'gif|jpeg|png';
-		$config['max_size']	= '500';
-		$config['max_width']  = '1024';
-		$config['max_height']  = '768';
 
-		$this->load->library('upload', $config);
-		// check whether any image data is available
-		if ( ! $this->upload->do_upload())
-		{
-			$error = array('error' => $this->upload->display_errors());
-			// $this->load->view('upload_form', $error);
-			$this->load->view('add_product', $error);
-		}
-		else
-		{
+		$product=$this->input->post();
+
+		// // check whether any image data is available
+		// if ( ! $this->upload->do_upload())
+		// {
+		// 	$array['error'] = $this->upload->display_errors();
+		// 	$array['category'] = $this->product->get_all_categories();
+
+		// 	$this->load->view('add_product', $array);
+		// }
+		// else
+		// {
+
+
+
+
 			// upload file
 			$data = array('upload_data' => $this->upload->data());
-			// var_dump($data);
+
+			var_dump($product);
+			var_dump($data);
+			die();
+
 			$file_name='././assets/img/'.$data['upload_data']['file_name'];
-			// grab all data
-			$product=$this->input->post();
+
 			// check if new category is added. If so, then use that new cat_id instead
 			if (!empty($product['add_new_cat'])) {
 				// create new category ID
@@ -97,6 +106,12 @@ class Admin extends CI_Controller {
 				$product['cat']=$last_id['LAST_INSERT_ID()'];
 			}
 
+
+			// if (!empty($images)){
+			// 	$img_path=1
+			// }
+
+
 			$product['image_path']=$file_name;
 			$this->product->add_product($product);
 
@@ -104,7 +119,7 @@ class Admin extends CI_Controller {
 			$last_id=$this->product->get_lastInsertID();			
 			$this->product->add_cat_relationships($product['cat'],$last_id['LAST_INSERT_ID()']);
 			redirect('/admin/add');
-		}
+		// }
 	}
 }
 
