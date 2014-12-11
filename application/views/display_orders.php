@@ -58,7 +58,7 @@
           <ul class="nav navbar-nav">
             <li><a class="navbar-brand" href="/products/index">Dojo eCommerce</a></li>
             <li><a href="/admin/display">Orders</a></li>
-            <li><a href="/admin/products">Products</a></li>
+            <li><a href="/admin/products/">Products</a></li>
           </ul>
           <form class="navbar-form navbar-right" role="search">
             <div class="form-group">

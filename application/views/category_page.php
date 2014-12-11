@@ -193,12 +193,13 @@
 	 	$prod_id=$product[$i]['id'];
 		$prod_name=$product[$i]['name'];
 		$prod_price=$product[$i]['price'];
-		$prod_image=$product[$i]['image_path'];
-		$sub_path=substr($prod_image, 4, strlen($prod_image)-1);
+		// $prod_image=$product[$i]['image_path'];
+		// $sub_path=substr($prod_image, 4, strlen($prod_image)-1);
 		//var_dump($sub_path);
 
 		echo "<div class='product'>";
-		echo "<a href='/products/prod_details'><img src='../../".$sub_path."'></a>";
+		echo "<a href='/products/prod_details'></a>";
+		// echo "<a href='/products/prod_details'><img src='../../".$sub_path."'></a>";
 		echo "<p class='price'><span>".$prod_price."</span></p>";
 		echo "<p class='prod_name'>".$prod_name."</p>";
 		echo "</div>"; 
