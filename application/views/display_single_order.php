@@ -30,7 +30,7 @@
        border-radius: 4px;
     }
    body{
-      padding:70px;
+      padding:30px;
    }
    .table-bordered{
       border: black solid 1px;
@@ -82,7 +82,7 @@
     display: inline-block;
     width: 200px;
     padding: 10px;
-    background-color: green;
+    /*background-color: green;*/
     color: black;
     margin-left: 80px;
    }
@@ -109,21 +109,19 @@
      </div><!-- /.navbar-collapse -->
    </div><!-- /.container-fluid -->
  </nav>
+<?php
+  // var_dump($order);
+  // var_dump($products);
+?>  
  <div class="row" id="main">
     <div id="order_info" class="col-xs-6 col-sm-5 col-md-4">
-      <p> Order ID: 1 </p>
+
+      <p> Order ID: <?=$order['order_id'];?> </p>
       <p id="shipping"> Customer shipping info: </p>
-      <p> Name: Bob </p>
-      <p> Address: 123 Dojo Way </p>
-      <p> City: Seattle </p>
-      <p> State: WA </p>
-      <p> Zip: 98133 </p>
-      <p id="billing"> Customer billing info: </p>
-      <p> Name Bob </p>
-      <p> Address: 123 Dojo Way </p>
-      <p> City: Seattle </p>
-      <p> State: WA </p>
-      <p> Zip: 98133 </p>
+      <p> Name: <?=$order['name'];?></p>
+      <p> Address: <?=$order['street_address'];?></p>
+      <p> City, State: <?=$order['city_state'];?></p>
+      <p> Zip: <?=$order['zipcode'];?></p>
     </div>
       <!-- Table -->
     <div class="col-xs-6 col-sm-4 col-md-4">
@@ -136,32 +134,46 @@
           <th> Total </th>
         </thead>
         <tbody>
+<?php
+  foreach($products as $product)
+      {
+?>          
           <tr>
-            <td> 35 </td>
-            <td> Cup </td>
-            <td> $9.99 </td>
-            <td> 1 </td>
-            <td> $9.99 </td>
+            <td><?=$product['product_id']?></td>
+            <td><?=$product['name']?></td>
+            <td><?=$product['price']?></td>
+            <td><?=$product['quantity']?></td>
+            <td><?php echo ($product['quantity']*$product['price'])?></td>
           </tr>
-          <tr>
-            <td> 215 </td>
-            <td> shirt </td>
-            <td> $19.99 </td>
-            <td> 2 </td>
-            <td> $39.98 </td>
-          </tr>
+<?php
+      }
+?>          
         </tbody>
       </table>
     </div>  
     
     <div id="total" class="col-xs-6 col-sm-3 col-md-offset-3 col-md-4">
-      <p> Sub total: $29.89 </p>
-      <p> Shipping: $1.00 </p>
-      <p> Total Price: $30.98 </p>
+      <p> Sub total: $<?=$product['amount']?> </p>
+      <p> Shipping: $<?=$product['shipping']?> </p>
+      <p> Total Price: $<?php echo ($product['amount']+$product['shipping'])?></p>
     </div>
+<?php
+  if($product['status'] = "shipped")
+  {
+    $status = "success";
+  }
+  elseif($product['status'] = "process")
+  {
+    $status = "info";
+  }
+  elseif($product['status'] = "cancelled")
+  {
+    $status = "danger";
+  }
+?>
     <div class="row">
-      <div id="status" class="col-xs-6 col-md-offset-10 col-md-6">
-        <p>Status: Shipped </p>
+      <div id="status" class="col-xs-6 col-md-offset-10 col-md-6 bg-<?=$status?>">
+        <p>Status: <?=$product['status']?></p>
       </div>
     </div>  
   </div>  

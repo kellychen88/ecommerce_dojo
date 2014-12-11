@@ -32,9 +32,10 @@ class Admin extends CI_Controller {
 		$user = $this->product->check($user_info);
 		if(isset($user['email']) && $user['email'] == $user_info['email'])
 		{
-			$id = $user['ID'];
+			$id = $user['id'];
 			$this->session->set_userdata('id', $id);
-			$this->load->view('display_orders');
+			$orders['orders'] = $this->product->display_all_orders();
+			$this->load->view('display_orders', $orders);
 		}
 		else
 		{
@@ -46,7 +47,8 @@ class Admin extends CI_Controller {
 	}
 	public function display()
 	{
-		$this->load->view('display_orders');
+		$orders['orders'] = $this->product->display_all_orders();
+		$this->load->view('display_orders', $orders);
 	}
 	public function products()
 	{
@@ -58,9 +60,11 @@ class Admin extends CI_Controller {
 		$this->load->view('display_products', $all_products);
 
 	}
-	public function single_order()
+	public function single_order($id)
 	{
-		$this->load->view('display_single_order');
+		$order['products'] = $this->product->get_products_by_id($id);
+		$order['order'] = $this->product->get_order_by_id($id);
+		$this->load->view('display_single_order', $order);
 	}
 
 	public function add()

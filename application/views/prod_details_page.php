@@ -1,3 +1,5 @@
+<?php
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,6 +101,7 @@
 </nav>
 
 <?php 
+
 		$main_subpath=substr($product['main_path'], 4, strlen($product['main_path'])-1);
 ?>
 <div class='container-main'>
@@ -121,9 +124,11 @@
 		<form action='/admin/products' name='buy' method='post'>
 			<div class='form-group buy-qty' name='buy' method='post'>
 				<select class='form-control select-qty' name='qty'>
-					<option value="1">1 (<?= $product['price'] ?>)</option>
-					<option value="2">2 (<?= $product['price']*2 ?>)</option>
-					<option value="3">3 (<?= $product['price']*3 ?>)</option>
+
+					<option value="1">1 (<?=$product['price']?>)</option>
+					<option value="2">2 (<?=$product['price']*2?>)</option>
+					<option value="3">3 (<?=$product['price']*3?>)</option>
+
 				</select>
 				<button class='btn btn-primary buy-btn'>Buy</button>
 			</div>

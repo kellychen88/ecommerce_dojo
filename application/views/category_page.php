@@ -182,12 +182,15 @@
 				</h2>
 			    <nav class="col-sm-6 col-md-4">
 <?php
-			      if(isset($product)){
-			      	$this_total = count($product);
 
-			      } else {
-			      	$this_total = count($each_page);
-			      }
+			      if(isset($product))
+			      	{
+			      		$this_total = count($product);
+			      	}
+			      	else
+			      	{
+			      		$this_total = count($each_page);
+			      	}	
 			      if($this->input->get('limit')){$this_limit = $this->input->get('limit');}else{$this_limit = 8;};
 			      if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 			      $last = ceil( $this_total / $this_limit );

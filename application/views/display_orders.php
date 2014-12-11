@@ -29,7 +29,7 @@
        border-radius: 4px;
     }
    body{
-      padding:70px;
+      padding:30px;
    }
    .table-responsive{
      border-radius: 4px;
@@ -42,6 +42,9 @@
    }
    thead{
       background-color: darkgray;
+   }
+   td{
+      text-align: center;
    }
    #search_by_status{
       margin-bottom: 23px;
@@ -81,6 +84,9 @@
         <option name="cancelled"> Cancelled </option>
       </select>
     </div>
+<?php
+    // var_dump($orders);
+?>    
       <!-- Table -->
       <table class="table table-striped table-bordered">
         <thead>
@@ -92,76 +98,50 @@
           <th> Status </th>
         </thead>
         <tbody>
+<?php
+      foreach($orders as $order)
+      {
+?>
           <tr>
-            <td><a href="/admin/single_order"> 100 </a></td>
-            <td> Bob </td>
-            <td> 9/6/2014 </td>
-            <td> 123 dojo way Bellevue WA 98005 </td>
-            <td> $149.99 </td>
+            <td><a href="/admin/single_order/<?=$order['order_id']?>"><?=$order['order_id']?></a></td>
+            <td><?=$order['name']?></td>
+            <td><?=$order['format_date']?></td>
+            <td><?=$order['street_address']?> <?=$order['city_state']?> <?=$order['zipcode']?></td>
+            <td>$<?=$order['amount']?></td>
             <td>
               <select value="status">
-                <option name="shipped"> Shipped </option>
-                <option name="proces"> Order in process </option>
-                <option name="cancelled"> Cancelled </option>
+<?php 
+                if($order['status'] == "shipped")
+                  {
+                    echo "<option value='shipped' selected> Shipped </option>";
+                  }
+                  else
+                  {
+                    echo "<option value='shipped'> Shipped </option>";
+                  }  
+                if($order['status'] == "process")
+                  {
+                    echo "<option value='process' selected> Order in Process </option>";
+                  }
+                  else
+                  {
+                    echo "<option value='process'> Order in process </option>";
+                  }
+                if($order['status'] == "cancelled")
+                  {
+                    echo "<option value='cancelled' selected> Cancelled </option>";
+                  }
+                  else
+                  {
+                    echo "<option value='cancelled'> Cancelled </option>";
+                  }
+?> 
               </select>
             </td>
           </tr>
-          <tr>
-            <td><a href="/admin/single_order"> 99 </a></td>
-            <td> Joe </td>
-            <td> 9/6/2014 </td>
-            <td> 123 dojo way Bellevue WA 98005 </td>
-            <td> $29.99 </td>
-            <td>
-              <select value="status">
-                <option name="shipped"> Shipped </option>
-                <option name="proces"> Order in process </option>
-                <option name="cancelled"> Cancelled </option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="/admin/single_order"> 98 </a></td>
-            <td> Joey </td>
-            <td> 9/6/2014 </td>
-            <td> 123 dojo way Bellevue WA 98005 </td>
-            <td> $4.99 </td>
-            <td>
-              <select value="status">
-                <option name="shipped"> Shipped </option>
-                <option name="proces"> Order in process </option>
-                <option name="cancelled"> Cancelled </option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="/admin/single_order"> 97 </a></td>
-            <td> Bob </td>
-            <td> 9/6/2014 </td>
-            <td> 123 dojo way Bellevue WA 98005 </td>
-            <td> $19.99 </td>
-            <td>
-              <select value="status">
-                <option name="shipped"> Shipped </option>
-                <option name="proces"> Order in process </option>
-                <option name="cancelled"> Cancelled </option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="/admin/single_order"> 51 </a></td>
-            <td> Bob </td>
-            <td> 9/6/2014 </td>
-            <td> 123 dojo way Bellevue WA 98005 </td>
-            <td> $99.99 </td>
-            <td>
-              <select value="status">
-                <option name="shipped"> Shipped </option>
-                <option name="proces"> Order in process </option>
-                <option name="cancelled"> Cancelled </option>
-              </select>
-            </td>
-          </tr>
+<?php
+      }
+?>            
         </tbody>
       </table>
     <nav>
