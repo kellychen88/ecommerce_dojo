@@ -105,10 +105,9 @@
 			);
 
 
+
+
 	}); //end doc. ready
-
-
-
 
 	</script>
 </head>

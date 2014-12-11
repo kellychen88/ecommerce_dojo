@@ -207,6 +207,7 @@ if(isset($error))
 			  		$catname=$category[$i]['name'];
 			  		$catid=$category[$i]['id'];
 	            	echo "<option value='".$catid."' >".$catname.'</option>';
+	            	// echo "<option selected value='".$catid."' >".$catname.'</option>';
 
 				}
 	?>
