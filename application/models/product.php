@@ -19,11 +19,33 @@ class product extends CI_Model {
      {
         return $this->db->query("SELECT * FROM products WHERE id = ?", array($id))->row_array();
      }
-     function add_product($product)
+     function add_product($product,$main_img_path)
      {
-        $query = "INSERT INTO products (name, description, price, image_path, created_at, updated_at) VALUES (?,?,?,?,?,?)";
-        $values = array($product['name'], $product['description'], $product['price'], $product['image_path'], 'Now()', 'Now()'); 
+        $query = "INSERT INTO products (name, description, price, main_path, created_at, updated_at) VALUES (?,?,?,?,?,?)";
+        $values = array($product['name'], $product['description'], $product['price'], $main_img_path, 'NOW()', 'NOW()'); 
         return $this->db->query($query, $values);
+     }
+     function edit_product($product,$main_img_path)
+     {
+        $query = "UPDATE products SET name=?, description=?, price=?, main_path=?, updated_at=NOW() WHERE id=?";
+        $values = array($product['name'], $product['description'], $product['price'], $main_img_path, $product['product_id']); 
+        return $this->db->query($query, $values);
+     }
+     function add_image($product_id,$image)
+     {
+        $query = "INSERT INTO images (product_id, image_path, filename, main) VALUES (?,?,?,?)";
+        $values = array($product_id,$image['image_path'],$image['image_name'],$image['image_main']);
+        $this->db->query($query, $values);
+     }
+     function edit_images($product_id,$image)
+     {
+        $query = "UPDATE images SET product_id=?, image_path=?, filename=?, main=? WHERE id=?";
+        $values = array($product_id,$image['image_path'],$image['image_name'],$image['image_main'], $image['image_ID']);
+        return $this->db->query($query, $values);
+     }
+     function get_all_image_IDs()
+     {
+        return $this->db->query("SELECT id FROM images")->result_array();
      }
      function get_lastInsertID(){
         return $this->db->query("SELECT LAST_INSERT_ID()")->row_array();        

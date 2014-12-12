@@ -189,11 +189,11 @@ if(isset($error))
 <div id='container'>
 	<h3 id='header-text'>Edit Product - <?=$product['id']?></h3>
 
-  	<button type="button" class="btn btn-remove btn-small btn-default">
+  	<a href='/admin/products' class="btn btn-remove btn-small btn-default">
   		<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-  	</button>
+  	</a>
 	<div id='details'>
-   		<form action='/admin/process' method='post' enctype="multipart/form-data">
+   		<form action='/admin/update' method='post' enctype="multipart/form-data">
 			<div class='name-div'>
 				<div class='name'>	
 					<span class='title'>Name</span>
@@ -255,9 +255,22 @@ if(isset($error))
 				<a href="/admin/delete_img/<?=$image['ID']?>" class="btn btn-small btn-default btn-trash">
 					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 				</a>
-				<input class='check-box' type="checkbox">
+
+<?php 		// Ensure the previously selected main image is already checked (leave all others unchecked)
+				if ($image['main']==1)
+				{   ?>
+				<input class='check-box' type="checkbox" name='main_img_id' value="<?=$image['ID']?>" checked>
+
+<?php			}
+				else 
+				{	?>
+				<input class='check-box' type="checkbox" name='main_img_id' value="<?=$image['ID']?>">
+<?php			} 	?>
 				<input type='hidden' name='product_id' value="<?=$image['product_id']?>">
 				<input type='hidden' name='img_id' value="<?=$image['ID']?>">
+				<input type='hidden' name='image_IDs[]' value="<?=$image['ID']?>">
+				<input type='hidden' name='image_names[]' value="<?=$image['filename']?>">
+				<input type='hidden' name='image_paths[]' value="<?=$image['image_path']?>">
 				<p class='button-text'>main</p>
 			</div>
 
@@ -266,7 +279,7 @@ if(isset($error))
 			<div class='btn-bottom'>
 		    	<input type="submit" class="btn btn-small btn-default" name='action' value='Cancel'>
 		    	<input type="submit" class="btn btn-small btn-success" name='action' value='Preview' >
-		    	<input type="submit" class="btn btn-small btn-primary" name='action' value='Update'>
+		    	<input type="submit" class="btn btn-small btn-primary" name='action' value='Edit'>
 			</div>
 		</form>
 	</div> <!-- end of details div -->

@@ -8,6 +8,7 @@ class Admin extends CI_Controller {
 		$this->load->model('product');  
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
+		$this->load->library('session');
 		date_default_timezone_set('America/Los_Angeles'); 
 
 		// File configs
@@ -72,12 +73,11 @@ class Admin extends CI_Controller {
 	}
 	public function edit($product_id)
 	{
-
 		$array['product']  = $this->product->get_product_by_id($product_id);	
 		$array['category'] = $this->product->get_all_categories();
 		$array['category_id'] = $this->product->get_cat_id_by_product_id($product_id);
 		$array['images']=$this->product->get_all_images_by_id($product_id);
-
+		$array['error']=$this->session->flashdata('error');
 		$this->load->view('edit_product', $array);	
 	}
 
@@ -91,48 +91,116 @@ class Admin extends CI_Controller {
 	{
 		$this->load->view('delete');
 	}	
-	public function process()
+	public function update()
 	{
 
 		$product=$this->input->post();
 
-		// // check whether any image data is available
-		// if ( ! $this->upload->do_upload())
-		// {
-		// 	$array['error'] = $this->upload->display_errors();
-		// 	$array['category'] = $this->product->get_all_categories();
+		// check if new category is added. If so, then use that new cat_id instead
+		if (!empty($product['add_new_cat'])) {
+			// create new category ID
+			$this->product->add_cat($product['add_new_cat']);
 
-		// 	$this->load->view('add_product', $array);
-		// }
-		// else
-		// {
+			// get last inserted category ID and make that the new category ID for the new product
+			$last_id=$this->product->get_lastInsertID();
+			$product['cat']=$last_id['LAST_INSERT_ID()'];
+		}
 
+		// Create a proper array with info on each image of the product
+		$images=array();
+		for ($i=0; $i<count($product['image_IDs']);$i++){
+			$images[]=array(
+				'image_ID'=>$product['image_IDs'][$i], 
+				'image_name'=>$product['image_names'][$i], 
+				'image_path'=>$product['image_paths'][$i],
+				'image_main'=>0
+			);
+		}
 
-
-
-			// upload file
+		// check whether any image data is available
+		if ( ! $this->upload->do_upload()) {
+			$error = $this->upload->display_errors();
+			$this->session->set_flashdata('error',$error);
+		}
+		else{
 			$data = array('upload_data' => $this->upload->data());
-			$file_name='././assets/img/'.$data['upload_data']['file_name'];
 
-			// check if new category is added. If so, then use that new cat_id instead
-			if (!empty($product['add_new_cat'])) {
-				// create new category ID
-				$this->product->add_cat($product['add_new_cat']);
+			$new_file_name=$data['upload_data']['file_name'];
+			$new_image_path='../../assets/img/'.$new_file_name;
 
-				// get last inserted category ID and make that the new category ID for the new product
-				$last_id=$this->product->get_lastInsertID();
-				$product['cat']=$last_id['LAST_INSERT_ID()'];
+			// Create a new image to the array
+			$images[]=array(
+				'image_ID'=>'999',  // set dummy value
+				'image_name'=>$new_file_name,
+				'image_path'=>$new_image_path,
+				'image_main'=>0
+			);
+		}
+
+		//get the main image ID
+		$main_img_id=$product['main_img_id'];
+
+		//get all existing images IDs
+
+		$image_IDs=$this->product->get_all_image_IDs();
+		foreach($image_IDs as $image_ID){
+			$all_image_ID[]=$image_ID['id'];
+		}
+
+		foreach ($images as $image){
+
+			//set value if image becomes main
+			if ($image['image_ID']==$main_img_id){
+				$image['image_main']=1;	
 			}
 
-			$product['image_path']=$file_name;
+			//add or edit image table depending whether image file is new
+			if (!(in_array($image['image_ID'],$all_image_ID))){
+				$this->product->add_image($product['product_id'],$image);	
+			}				
+			else{
+				$this->product->edit_images($product['product_id'],$image);
+			}
 
-			$this->product->add_product($product);
+			//figure out the main image path
+			if ($image['image_ID']==$product['main_img_id']) {
+				$main_img_path=$image['image_path'];
+			}
+		}
 
-			// get last inserted product ID and add the category-product relationship
-			$last_id=$this->product->get_lastInsertID();			
-			$this->product->add_cat_relationships($product['cat'],$last_id['LAST_INSERT_ID()']);
-			redirect('/admin/add');
+		// edit the product table
+		$this->product->edit_product($product,$main_img_path);
+
+		// else
+		// {
+		// 	// upload file
+		// 	$data = array('upload_data' => $this->upload->data());
+		// 	$file_name=$data['upload_data']['file_name'];
+		// 	$image_path='../../assets/img/'.$file_name;
+
+
+		// 	$product['image_path']=$image_path;
+		// 	$product['file_name']=$file_name;
+
+		// 	var_dump($product); die();
+
+		// 	if ($product['action']=='add')
+		// 	{
+		// 		$this->product->add_product($product,$product['main']);
+
+		// 		// get last inserted product ID and add the category-product relationship
+		// 		$last_id=$this->product->get_lastInsertID();			
+		// 		$this->product->add_cat_relationships($product['cat'],$last_id['LAST_INSERT_ID()']);
+		// 	}
+		// 	elseif ($product['action']=='Edit')
+		// 	{
+		// 		$this->product->edit_product($product,$product['main']);
+		// 	}
+
 		// }
+
+		redirect('/admin/edit/'.$product['product_id']);
+
 	}
 }
 
