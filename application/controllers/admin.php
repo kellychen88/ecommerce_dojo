@@ -85,10 +85,10 @@ class Admin extends CI_Controller {
 		$this->load->view('edit_product', $array);	
 	}
 
-	public function delete_img($img_id)
+	public function delete_img($img_id,$prod_id)
 	{
-		var_dump($img_id);
-		// delete function
+		$this->product->delete_img($img_id);
+		redirect('/admin/edit/'.$prod_id);
 	}
 
 	public function delete()
@@ -97,7 +97,6 @@ class Admin extends CI_Controller {
 	}	
 	public function update()
 	{
-
 		$product=$this->input->post();
 
 		// check if new category is added. If so, then use that new cat_id instead
@@ -108,6 +107,10 @@ class Admin extends CI_Controller {
 			// get last inserted category ID and make that the new category ID for the new product
 			$last_id=$this->product->get_lastInsertID();
 			$product['cat']=$last_id['LAST_INSERT_ID()'];
+		}
+
+		if (!isset($product['image_IDs'])) {
+			$product['image_IDs']=array();
 		}
 
 		// Create a proper array with info on each image of the product
@@ -142,9 +145,15 @@ class Admin extends CI_Controller {
 		}
 
 		//get the main image ID
-		$main_img_id=$product['main_img_id'];
+		if (isset($product['main_img_id'])){
+			$main_img_id=$product['main_img_id'];
+		}
+		else{
+			$main_img_id=9999; //set random value if main id is not set
+		}
 
 		//get all existing images IDs
+		$all_image_ID=array();
 
 		$image_IDs=$this->product->get_all_image_IDs();
 		foreach($image_IDs as $image_ID){
@@ -156,6 +165,11 @@ class Admin extends CI_Controller {
 			//set value if image becomes main
 			if ($image['image_ID']==$main_img_id){
 				$image['image_main']=1;	
+			}
+
+			if (!isset($product['main_img_id'])){
+				$product['main_img_id']=$image['image_ID'];
+				$image['image_main']=1;					
 			}
 
 			//add or edit image table depending whether image file is new
@@ -172,8 +186,19 @@ class Admin extends CI_Controller {
 			}
 		}
 
+
+		if (!isset($main_img_path)){
+			$main_img_path=''; //need to set value if no main path
+		}
+
+//		var_dump($product); die();
 		// edit the product table
 		$this->product->edit_product($product,$main_img_path);
+
+		// get last inserted product ID and add the category-product relationship
+		$last_id=$this->product->get_lastInsertID();			
+		$this->product->add_cat_relationships($product['cat'],$product['product_id']);
+
 
 		// else
 		// {

@@ -6,10 +6,10 @@ if(isset($error))
 ?>
 
 <?php 
-	// var_dump($product);
+	var_dump($product);
 	// var_dump($category_id);
 	// var_dump($category);
-	//var_dump($images);
+	var_dump($images);
 ?>
 
 <!DOCTYPE html>
@@ -252,30 +252,29 @@ if(isset($error))
 				<div class='thumbnail'><img src="<?=$image['image_path']?>" alt="Hat" height="42" width="42"></div> 
 				<!-- <div class='hover-images'><img src="../../assets/square.jpg" alt="Hat" height="42" width="42"></div>  -->
 				<p class='button-text'><?=$image['filename']?></p>
-				<a href="/admin/delete_img/<?=$image['ID']?>" class="btn btn-small btn-default btn-trash">
+				<a href="/admin/delete_img/<?=$image['id']?>/<?=$product['id']?>" class="btn btn-small btn-default btn-trash">
 					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 				</a>
 
 <?php 		// Ensure the previously selected main image is already checked (leave all others unchecked)
 				if ($image['main']==1)
 				{   ?>
-				<input class='check-box' type="checkbox" name='main_img_id' value="<?=$image['ID']?>" checked>
+				<input class='check-box' type="checkbox" name='main_img_id' value="<?=$image['id']?>" checked>
 
 <?php			}
 				else 
 				{	?>
-				<input class='check-box' type="checkbox" name='main_img_id' value="<?=$image['ID']?>">
+				<input class='check-box' type="checkbox" name='main_img_id' value="<?=$image['id']?>">
 <?php			} 	?>
-				<input type='hidden' name='product_id' value="<?=$image['product_id']?>">
-				<input type='hidden' name='img_id' value="<?=$image['ID']?>">
-				<input type='hidden' name='image_IDs[]' value="<?=$image['ID']?>">
+				<input type='hidden' name='img_id' value="<?=$image['id']?>">
+				<input type='hidden' name='image_IDs[]' value="<?=$image['id']?>">
 				<input type='hidden' name='image_names[]' value="<?=$image['filename']?>">
 				<input type='hidden' name='image_paths[]' value="<?=$image['image_path']?>">
 				<p class='button-text'>main</p>
 			</div>
 
 <?php		} ?>
-
+			<input type='hidden' name='product_id' value="<?=$product['id']?>">
 			<div class='btn-bottom'>
 		    	<input type="submit" class="btn btn-small btn-default" name='action' value='Cancel'>
 		    	<input type="submit" class="btn btn-small btn-success" name='action' value='Preview' >

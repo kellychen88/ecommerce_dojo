@@ -27,8 +27,8 @@ class product extends CI_Model {
      }
      function edit_product($product,$main_img_path)
      {
-        $query = "UPDATE products SET name=?, description=?, price=?, main_path=?, updated_at=NOW() WHERE id=?";
-        $values = array($product['name'], $product['description'], $product['price'], $main_img_path, $product['product_id']); 
+        $query = "UPDATE products SET name=?, description=?, price=?, inventory_count=?, main_path=?, updated_at=NOW() WHERE id=?";
+        $values = array($product['name'], $product['description'], $product['price'], $product['quantity'], $main_img_path, $product['product_id']); 
         return $this->db->query($query, $values);
      }
      function add_image($product_id,$image)
@@ -109,9 +109,9 @@ class product extends CI_Model {
      {
         return $this->db->query("SELECT image_path FROM images WHERE product_id = ?", array($prod_id))->result_array();
      }
-     function delete_img($img)
+     function delete_img($img_id)
      {
-        $query = "DELETE FROM images WHERE images = '{$img}'";
+        $query = "DELETE FROM images WHERE ID ='{$img_id}'";
         return $this->db->query($query);   
      }
      function display_all_orders()
