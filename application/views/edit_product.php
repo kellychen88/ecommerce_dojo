@@ -1,16 +1,20 @@
 <?php
-if(isset($error))
-{
-	echo $error;
+// var_dump($product);
+// var_dump($images);
+// var_dump($category_id);
+// var_dump($category);
+// var_dump($cat_assigned);
+
+if(isset($cat_assigned)){
+	echo 'The following categories are assigned to the product:<br>';
+	foreach ($cat_assigned as $cat){
+		echo ' - '.$cat['name'].'<br>';
+	}
 }
+
+if(isset($error)) {echo $error;}
 ?>
 
-<?php 
-	var_dump($product);
-	// var_dump($category_id);
-	// var_dump($category);
-	var_dump($images);
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -142,47 +146,8 @@ if(isset($error))
 		input.check-box{margin-top:20px;}
 		.button-text{margin-top:13px;}
 		.btn-bottom{margin: 30px 0px 20px 165px;}
-
-
 	</style>
 
-
-	<script type="text/javascript">
-	  	$(document).ready(function(){
-
-		  	// $(document).on('submit', 'form', function()
-		  	// {	
-		  	// 	var form = $(this);
-		  	// 	$.post(form.attr('action'),form.serialize(),function(data){
-		  	// 		$('#notes').html(data);
-		  	// 	});
-		  	// 	return false;
-		  	// });
-
-
-// 		 	$(".hover-images").hover(
-
-// //		 	$(document).on('hover', '.hover-images',	
-
-// 				function() {
-// 			    	$(this).css('cursor','crosshair');
-// 			    	console.log($(this));
-// 			    	// $(".btn-trash").css("visibility","visible");
-// 			    	// $(".glyphicon-trash").css("visibility","visible");
-// 			    	$(this).child(".btn-trash").css("visibility","visible");
-// 			    	$(this).child(".glyphicon-trash").css("visibility","visible");
-// 				 }, 
-// 				function() {
-// 			    	$(this).css('cursor','finger');
-// 			    	// $(".btn-trash").css("visibility","hidden");
-// 			    	// $(".glyphicon-trash").css("visibility","hidden");
-// 			    	$(this).child(".btn-trash").css("visibility","hidden");
-// 			    	$(this).child(".glyphicon-trash").css("visibility","hidden");
-// 				}
-// 			);
-	}); 
-
-	</script>
 </head>
 <body>
 
@@ -276,7 +241,7 @@ if(isset($error))
 <?php		} ?>
 			<input type='hidden' name='product_id' value="<?=$product['id']?>">
 			<div class='btn-bottom'>
-		    	<input type="submit" class="btn btn-small btn-default" name='action' value='Cancel'>
+		    	<a href='/admin/products' type="button" class="btn btn-small btn-default" name='action' value='Cancel'>Cancel</a>
 		    	<input type="submit" class="btn btn-small btn-success" name='action' value='Preview' >
 		    	<input type="submit" class="btn btn-small btn-primary" name='action' value='Edit'>
 			</div>

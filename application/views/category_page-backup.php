@@ -91,8 +91,6 @@
 			vertical-align: top;
 			width: 800px;
 		}
-	
-
 		
 		.sort{margin: 10px 0px 10px 53px;}
 		.sort{
@@ -227,7 +225,7 @@
 ?>        
 			          <li class="disabled"><span>...</span></li>
 			          <li><a href="?limit='<?=$this_limit?>'&page=<?=$last?>"><?=$last?></a></li>
-<?php          
+<?php
 			      }
 ?>
 					  <li class="<?php if( $page == $last ){echo 'disabled';}?>">

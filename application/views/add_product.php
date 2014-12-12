@@ -1,9 +1,3 @@
-<?php
-if(isset($error))
-{
-	echo $error;
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,67 +128,36 @@ if(isset($error))
 		input.check-box{margin-top:20px;}
 		.button-text{margin-top:13px;}
 		.btn-bottom{margin: 30px 0px 20px 165px;}
-
-
 	</style>
 
-
-	<script type="text/javascript">
-	  	$(document).ready(function(){
-
-		  	// $(document).on('submit', 'form', function()
-		  	// {	
-		  	// 	var form = $(this);
-		  	// 	$.post(form.attr('action'),form.serialize(),function(data){
-		  	// 		$('#notes').html(data);
-		  	// 	});
-		  	// 	return false;
-		  	// });
-
-
-		 	$(".hover-images").hover(
-				function() {
-			    	$(this).css('cursor','crosshair');
-			    	$(".btn-trash").css("visibility","visible");
-			    	$(".glyphicon-trash").css("visibility","visible");
-				 }, 
-				function() {
-			    	$(this).css('cursor','finger');
-			    	$(".btn-trash").css("visibility","hidden");
-			    	$(".glyphicon-trash").css("visibility","hidden");
-				}
-			);
-	}); 
-
-	</script>
 </head>
 <body>
 
 <div id='container'>
-	<h3 id='header-text'>Edit Product</h3>
+	<h3 id='header-text'>Add Product</h3>
 
-  	<button type="button" class="btn btn-remove btn-small btn-default">
+  	<a href='/admin/products' class="btn btn-remove btn-small btn-default">
   		<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-  	</button>
+  	</a>
 	<div id='details'>
-   		<form action='/admin/process' method='post' enctype="multipart/form-data">
+   		<form action='/admin/update' method='post' enctype="multipart/form-data">
 			<div class='name-div'>
 				<div class='name'>	
 					<span class='title'>Name</span>
-					<input class='display-name' type='text' name='name' placeholder='name' value='kelly'>
+					<input class='display-name' type='text' name='name' placeholder='name' value="Test_product">
 				</div>
 				<div>
 					<span class='title'>Description</span>
-					<input class='display-desc' type='textarea' name='description' value='Great Fit, Cool new colors'>
+					<input class='display-desc' type='textarea' name='description' value="Test_desc">
 				</div>
 
 				<div class='price-div'>	
 					<span class='title'>Price ($)</span>
-					<input class='display-price' type='text' name='price' placeholder='$...' value='119.99'>
+					<input class='display-price' type='text' name='price' placeholder='$...' value="9999">
 				</div>
 				<div>	
 					<span class='title'>Quantity</span>
-					<input class='display-qty' type='text' name='quantity' placeholder='1,2,3,...' value='3'>
+					<input class='display-qty' type='text' name='quantity' placeholder='1,2,3,...' value="100">
 				</div>
 			</div>
 
@@ -206,9 +169,13 @@ if(isset($error))
 				{
 			  		$catname=$category[$i]['name'];
 			  		$catid=$category[$i]['id'];
-	            	echo "<option value='".$catid."' >".$catname.'</option>';
-	            	// echo "<option selected value='".$catid."' >".$catname.'</option>';
 
+			  		if ($catid==$category_id['category_id']){
+		            	echo "<option selected value='".$catid."' >".$catname.'</option>';
+			  		}
+			  		else {
+		            	echo "<option value='".$catid."' >".$catname.'</option>';
+			  		}
 				}
 	?>
 				</select>
@@ -222,44 +189,10 @@ if(isset($error))
 				<input type='file' class='display-upload' name='userfile' size='20'>
 			</div>
 
-			<div class='hover-images'>
-			<!-- <div class='images'> -->
-				<button type="button" class="btn btn-small btn-default btn-drag" aria-label="Left Align">
-					<span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
-				</button>		
-				<div class='thumbnail'><img src="../../assets/square.jpg" alt="Hat" height="42" width="42"></div> 
-				<!-- <div class='hover-images'><img src="../../assets/square.jpg" alt="Hat" height="42" width="42"></div>  -->
-				<p class='button-text'>img.png</p>
-				<button type="button" class="btn btn-small btn-default btn-trash">
-					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-				</button>
-				<input class='check-box' type="checkbox">
-				<input type='hidden' name='product_id' value='1'>
-				<input type='hidden' name='img_id' value='1'>
-				<p class='button-text'>main</p>
-			</div>
-
-			<div class='hover-images'>
-			<!-- <div class='images'> -->
-				<button type="button" class="btn btn-small btn-default btn-drag" aria-label="Left Align">
-					<span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
-				</button>		
-				<div class='thumbnail'><img src="../../assets/square.jpg" alt="Hat" height="42" width="42"></div> 
-				<!-- <div class='hover-images'><img src="../../assets/square.jpg" alt="Hat" height="42" width="42"></div>  -->
-				<p class='button-text'>img.png</p>
-				<button type="button" class="btn btn-small btn-default btn-trash">
-					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-				</button>
-				<input class='check-box' type="checkbox">
-				<input type='hidden' name='product_id' value='1'>
-				<input type='hidden' name='img_id' value='2'>
-				<p class='button-text'>main</p>
-			</div>
-
 			<div class='btn-bottom'>
-		    	<input type="submit" class="btn btn-small btn-default" name='action' value='Cancel'>
+		    	<a href='/admin/products' type="button" class="btn btn-small btn-default" name='action' value='Cancel'>Cancel</a>
 		    	<input type="submit" class="btn btn-small btn-success" name='action' value='Preview' >
-		    	<input type="submit" class="btn btn-small btn-primary" name='action' value='Update'>
+		    	<input type="submit" class="btn btn-small btn-primary" name='action' value='Add'>
 			</div>
 		</form>
 	</div> <!-- end of details div -->

@@ -21,8 +21,8 @@ class product extends CI_Model {
      }
      function add_product($product,$main_img_path)
      {
-        $query = "INSERT INTO products (name, description, price, main_path, created_at, updated_at) VALUES (?,?,?,?,?,?)";
-        $values = array($product['name'], $product['description'], $product['price'], $main_img_path, 'NOW()', 'NOW()'); 
+        $query = "INSERT INTO products (name, description, price, inventory_count, main_path, created_at, updated_at) VALUES (?,?,?,?,?,NOW(),NOW())";
+        $values = array($product['name'], $product['description'], $product['price'], $product['quantity'], $main_img_path,); 
         return $this->db->query($query, $values);
      }
      function edit_product($product,$main_img_path)
@@ -61,7 +61,7 @@ class product extends CI_Model {
      function add_cat($cat_id)
      {
         $query = "INSERT INTO category (name, created_at, updated_at) VALUES (?,?,?)";
-        $values = array($cat_id,'Now()', 'Now()'); 
+        $values = array($cat_id,'NOW()','NOW()'); 
         return $this->db->query($query, $values);
      }
 
@@ -71,7 +71,15 @@ class product extends CI_Model {
      }
 
      function get_cat_id_by_product_id($prod_id){
-        return $this->db->query("SELECT category_id FROM products_has_category WHERE products_id = ?", array($prod_id))->row_array();
+        return $this->db->query("SELECT category_id FROM products_has_category WHERE products_id = ?", array($prod_id))->result_array();
+     }
+
+     function get_cat_by_product_id($prod_id){
+        $query="SELECT category.name FROM products_has_category
+                LEFT JOIN category 
+                    ON products_has_category.category_id=category.id
+                WHERE products_has_category.products_id = ?";
+        return $this->db->query($query, array($prod_id))->result_array();
      }
 
      function get_all_images_by_id($prod_id){

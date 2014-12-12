@@ -79,6 +79,7 @@ class Admin extends CI_Controller {
 	{
 		$array['product']  = $this->product->get_product_by_id($product_id);	
 		$array['category'] = $this->product->get_all_categories();
+		$array['cat_assigned']=$this->product->get_cat_by_product_id($product_id);
 		$array['category_id'] = $this->product->get_cat_id_by_product_id($product_id);
 		$array['images']=$this->product->get_all_images_by_id($product_id);
 		$array['error']=$this->session->flashdata('error');
@@ -172,33 +173,62 @@ class Admin extends CI_Controller {
 				$image['image_main']=1;					
 			}
 
-			//add or edit image table depending whether image file is new
-			if (!(in_array($image['image_ID'],$all_image_ID))){
-				$this->product->add_image($product['product_id'],$image);	
-			}				
-			else{
-				$this->product->edit_images($product['product_id'],$image);
-			}
-
 			//figure out the main image path
 			if ($image['image_ID']==$product['main_img_id']) {
 				$main_img_path=$image['image_path'];
 			}
+
+			//only perform this for "editing product" because no product_id at this point when "adding new product"
+			if ($product['action']=='Edit'){
+				//add or edit image table depending whether image file is new
+				if (!(in_array($image['image_ID'],$all_image_ID))){
+					$this->product->add_image($product['product_id'],$image);	
+				}				
+				else{
+					$this->product->edit_images($product['product_id'],$image);
+				}
+			}
 		}
 
-
+		//need to set value if no main path
 		if (!isset($main_img_path)){
-			$main_img_path=''; //need to set value if no main path
+			$main_img_path=''; 
 		}
 
-//		var_dump($product); die();
-		// edit the product table
-		$this->product->edit_product($product,$main_img_path);
+		if ($product['action']=='Add'){
+			$this->product->add_product($product,$main_img_path);
+			// get last inserted product ID and add the category-product relationship
+			$last_id=$this->product->get_lastInsertID();
+			$product['product_id']=$last_id['LAST_INSERT_ID()'];
 
-		// get last inserted product ID and add the category-product relationship
-		$last_id=$this->product->get_lastInsertID();			
-		$this->product->add_cat_relationships($product['cat'],$product['product_id']);
+			//add image after establishing product ID
+			$this->product->add_image($product['product_id'],$image); 
 
+			$this->product->add_cat_relationships($product['cat'],$product['product_id']);
+
+		}
+
+		else if($product['action']=='Edit'){
+			// edit the product table
+			$this->product->edit_product($product,$main_img_path);
+
+			// Ensure existing category id to product pairing is unique prior to adding new relationship to database
+			$cat_ids_db=$this->product->get_cat_id_by_product_id($product['product_id']);
+			if (empty($cat_ids_db)){
+				$this->product->add_cat_relationships($product['cat'],$product['product_id']);
+			}
+			else{
+				//convert into a simple array
+				$cat_id=array();
+				foreach ($cat_ids_db as $cat_id_db) {$cat_id[]=$cat_id_db['category_id'];}
+				//only when the category selected is not in the relationship table, then add that relationship
+				if (!(in_array($product['cat'],$cat_id))) {
+					$this->product->add_cat_relationships($product['cat'],$product['product_id']);
+				}
+			}
+		}
+
+		redirect('/admin/edit/'.$product['product_id']);
 
 		// else
 		// {
@@ -227,8 +257,6 @@ class Admin extends CI_Controller {
 		// 	}
 
 		// }
-
-		redirect('/admin/edit/'.$product['product_id']);
 
 	}
 	public function edit_action()
