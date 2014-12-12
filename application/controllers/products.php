@@ -16,7 +16,17 @@ class Products extends CI_Controller {
 
 	public function index()
 	{
-		// $product_id = 38; //hard code for now
+
+		if ($this->input->post('sort') == '') {
+			$array['sort'] = "price";
+		} elseif ($this->input->post('sort') == 'most popular') {
+			$array['sort'] = "quantity_sold";
+		} else {
+			$arrat['sort'] = $this->input->post('sort');
+		}
+
+		//$array['name'] = "Products";
+
 		if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
 	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 	 	$start = ( $page - 1 ) * $limit;
@@ -28,10 +38,12 @@ class Products extends CI_Controller {
 	}
 	public function show($id, $name)
 	 {
+	 	//echo $id; echo $name;
 	 	if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
 	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 	 	$start = ( $page - 1 ) * $limit;
 		$name = str_replace('%20', ' ', $name);
+		$array['id'] = $id;
 		$array['name'] = $name;
 		$array['category'] = $this->product->get_all_categories();
 		if ($id == 'all') {
@@ -57,26 +69,41 @@ class Products extends CI_Controller {
 		redirect('products/index');
 
 	}
+	
+	public function search()
+	{
 
-	public function search() {
 		$array['category'] = $this->product->get_all_categories();
-		if (isset($_POST["search-product"])) 
+		if(isset($_POST['search-product']))
 		{
-			$array['name'] = $_POST["search-product"];
-			$array['product']  = $this->product->get_product_by_product_name($_POST['search-product']);
+			$array['name'] = $_POST['search-product'];
+			$array['each_page'] = $this->product->get_product_by_product_name($_POST['search-product']);
 			$this->load->view('category_page', $array);
-		}
+		}	
 	}
+
 	public function prod_details($prod_id)
 	{
+
+		$array['category'] = $this->product->get_all_categories();
 		$array['product']  = $this->product->get_product_by_id($prod_id);
+		$array['image']  = $this->product->get_image_by_id($prod_id);
+
+		$array['product'] =  $this->product->get_product_by_id($prod_id);
+		// $array['image'] = $this->product->get_images_by_id($prod_id);
+
 		$this->load->view('prod_details_page', $array);
 	}
-
 	public function carts()
 	{
 		$this->load->view('carts_page');
 	}
+
+	public function sort() 
+	{
+
+	}
+
 }
 
 //end of main controller

@@ -9,7 +9,7 @@ if(isset($error))
 	// var_dump($product);
 	// var_dump($category_id);
 	// var_dump($category);
-	var_dump($images);
+	//var_dump($images);
 ?>
 
 <!DOCTYPE html>

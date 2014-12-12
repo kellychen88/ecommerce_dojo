@@ -32,7 +32,7 @@
        border-radius: 4px;
     }
    body{
-      padding:70px;
+      padding:30px;
    }
    table{
     margin-top: 26px;

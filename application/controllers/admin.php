@@ -33,9 +33,10 @@ class Admin extends CI_Controller {
 		$user = $this->product->check($user_info);
 		if(isset($user['email']) && $user['email'] == $user_info['email'])
 		{
-			$id = $user['ID'];
+			$id = $user['id'];
 			$this->session->set_userdata('id', $id);
-			$this->load->view('display_orders');
+			$orders['orders'] = $this->product->display_all_orders();
+			$this->load->view('display_orders', $orders);
 		}
 		else
 		{
@@ -47,7 +48,8 @@ class Admin extends CI_Controller {
 	}
 	public function display()
 	{
-		$this->load->view('display_orders');
+		$orders['orders'] = $this->product->display_all_orders();
+		$this->load->view('display_orders', $orders);
 	}
 	public function products()
 	{
@@ -59,9 +61,11 @@ class Admin extends CI_Controller {
 		$this->load->view('display_products', $all_products);
 
 	}
-	public function single_order()
+	public function single_order($id)
 	{
-		$this->load->view('display_single_order');
+		$order['products'] = $this->product->get_products_by_id($id);
+		$order['order'] = $this->product->get_order_by_id($id);
+		$this->load->view('display_single_order', $order);
 	}
 
 	public function add()
@@ -201,6 +205,24 @@ class Admin extends CI_Controller {
 
 		redirect('/admin/edit/'.$product['product_id']);
 
+	}
+	public function edit_action()
+	{
+		//echo $this->input->post('action');
+
+		if($this->input->post('action') == 'Cancel') 
+  		{
+  			redirect('/admin/products');
+  		} elseif ($this->input->post('action') == 'Preview') {
+  	
+			$array['product']=$this->input->post();
+			
+  			//var_dump($array); //die();
+
+  			$this->load->view('preview_product', $array);
+  		} elseif ($this->input->post('action') == 'Update') {
+  			echo "Go to update page";
+  		}
 	}
 }
 

@@ -96,7 +96,7 @@ class product extends CI_Model {
      function add_shipping($data)
      {
          $query = "INSERT INTO users (name, street_address, city_state, zipcode, created_at, updated_at) 
-             VALUES(CONCAT('{$data['first_name_ship']}', '{$data['last_name_ship']}'), CONCAT('{$data['address1_ship']}', '{$data['address2_ship']}'), CONCAT('{$data['city_ship']}', '{$data['state_ship']}'), '{$data['zip_ship']}', NOW(), NOW())";
+             VALUES(CONCAT('{$data['first_name_ship']}',.,'{$data['last_name_ship']}'), CONCAT('{$data['address1_ship']}',.,'{$data['address2_ship']}'), CONCAT('{$data['city_ship']}',.,'{$data['state_ship']}'), '{$data['zip_ship']}', NOW(), NOW())";
              return $this->db->query($query);
      }
      function check($user)
@@ -104,9 +104,35 @@ class product extends CI_Model {
          $query = "SELECT * FROM admin WHERE admin.email = '{$user['email']}' AND admin.password = '{$user['password']}'";
          return $this->db->query($query)->row_array();
      }
+
+     function get_image_by_id($prod_id)
+     {
+        return $this->db->query("SELECT image_path FROM images WHERE product_id = ?", array($prod_id))->result_array();
+     }
      function delete_img($img)
      {
         $query = "DELETE FROM images WHERE images = '{$img}'";
         return $this->db->query($query);   
+     }
+     function display_all_orders()
+     {
+        $query = "SELECT users_orders.id AS order_id, users.*, DATE_FORMAT(orders.created_at, '%c/%e/%y') as format_date, orders.amount, orders.status 
+        FROM users_orders JOIN users ON users.id = users_orders.users_id JOIN orders ON orders.id = users_orders.orders_id";
+        return $this->db->query($query)->result_array();  
+     }
+     function get_order_by_id($order_id)
+     {
+        $query = "SELECT users_orders.id AS order_id, users.name, users.street_address, users.city_state, users.zipcode
+            FROM users_orders JOIN users ON users.id = users_orders.users_id 
+            WHERE users_orders.orders_id = {$order_id}";
+        return $this->db->query($query)->row_array();  
+     }
+     function get_products_by_id($order_id)
+     {
+         $query = "SELECT ordered_product.orders_id, ordered_product.quantity, ordered_product.product_id, orders.shipping, orders.amount, orders.status, products.name, products.price
+            FROM ordered_product JOIN orders ON orders.id = ordered_product.orders_id
+            JOIN products ON products.id = ordered_product.product_id
+            WHERE ordered_product.orders_id = {$order_id}";
+        return $this->db->query($query)->result_array();
      }
 }
