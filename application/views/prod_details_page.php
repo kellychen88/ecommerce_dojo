@@ -101,12 +101,12 @@
 </nav>
 
 <?php 
-
+var_dump($category);  var_dump($cat_name);   //die();
 		$main_subpath=substr($product['main_path'], 4, strlen($product['main_path'])-1);
 ?>
 <div class='container-main'>
 	<div class='left-section'>
-		<a href='/products/show/<?=$category['id'] ?>/<?=$category['name'] ?> '>Go Back</a>
+		<a href='/products/show/<?=$category['category_id'] ?>/<?=$cat_name['name'] ?> '>Go Back</a>
 		<h1><?= $product['name'] ?></h1>
 		<img class='main-img' src='../../<?= $main_subpath ?> '>
 		<div class='thumbnail1'>

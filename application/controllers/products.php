@@ -2,6 +2,8 @@
 
 class Products extends CI_Controller {
 
+	private $_sort = 'sort_price';
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -17,16 +19,15 @@ class Products extends CI_Controller {
 	public function index()
 	{
 
-		if ($this->input->post('sort') == '') {
-			$array['sort'] = "price";
-		} elseif ($this->input->post('sort') == 'most popular') {
-			$array['sort'] = "quantity_sold";
-		} else {
-			$arrat['sort'] = $this->input->post('sort');
-		}
-
-		//$array['name'] = "Products";
-
+// 		if ($this->input->post('sort') == '') {
+// 			$array['sort'] = "price";
+// 		} elseif ($this->input->post('sort') == 'most popular') {
+// 			$array['sort'] = "quantity_sold";
+	
+// 	} else {
+// 			$arrat['sort'] = $this->input->post('sort');
+// 		}
+// var_dump($array);
 		if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
 	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 	 	$start = ( $page - 1 ) * $limit;
@@ -84,14 +85,10 @@ class Products extends CI_Controller {
 
 	public function prod_details($prod_id)
 	{
-
-		$array['category'] = $this->product->get_all_categories();
+		$array['cat_name'] = $this->product->get_cat_name_by_product_id($prod_id);
+		$array['category'] = $this->product->get_cat_id_by_product_id($prod_id);
 		$array['product']  = $this->product->get_product_by_id($prod_id);
 		$array['image']  = $this->product->get_image_by_id($prod_id);
-
-		$array['product'] =  $this->product->get_product_by_id($prod_id);
-		// $array['image'] = $this->product->get_images_by_id($prod_id);
-
 		$this->load->view('prod_details_page', $array);
 	}
 	public function carts()
@@ -101,7 +98,8 @@ class Products extends CI_Controller {
 
 	public function sort() 
 	{
-
+			$this->_sort = $this->input->post('sort'); // $_POST("sort");
+			echo $this->_sort;
 	}
 
 }

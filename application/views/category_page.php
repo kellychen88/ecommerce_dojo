@@ -19,7 +19,8 @@
 	<script type="text/javascript">
 
 		$(document).ready(function(){
-			$(".sort-form").change(function() {
+			$('.sort-select').change(function() {
+				alert("in ready");
 			var select = $(".sort-form option:selected").val();
 			alert(select);
 		});
@@ -236,7 +237,7 @@
 				<div class='sort'>
 					<p>Sorted by </p>
 					<form action='/products/sort' method='post'>
-						<select name='sort' class='sort-form'>
+						<select name='sort' class='sort-select'>
 							<option value='sort_price'>Price</option>
 							<option value='sort_popular'>Most Popular</option>
 						</select>
@@ -254,7 +255,7 @@
 		   		   $sub_path=substr($prod_image, 4, strlen($prod_image)-1);
 
 		   		echo "<div class='product'>";
-		   		echo "<a href='/products/prod_details'></a>";
+		   		//echo "<a href='/products/prod_details'></a>";
 		   		   echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
 		   		echo "<p class='price'><span>".$prod_price."</span></p>";
 		   		echo "<a href='/products/prod_details/$prod_id'><p class='prod_name'>".$prod_name."</p></a>";

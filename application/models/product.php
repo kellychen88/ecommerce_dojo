@@ -52,6 +52,12 @@ class product extends CI_Model {
         return $this->db->query("SELECT category_id FROM products_has_category WHERE products_id = ?", array($prod_id))->row_array();
      }
 
+     function get_cat_name_by_product_id($prod_id){
+        $query = "SELECT category.name FROM category JOIN products_has_category ON category.id = products_has_category.category_id JOIN products ON products.id=products_has_category.products_id WHERE products.id = {$prod_id} ";
+//var_dump("get_cat_name_by_product_id"); var_dump($query); die();
+        return $this->db->query($query)->row_array();;
+     } // for go back
+
      function get_all_images_by_id($prod_id){
         return $this->db->query("SELECT * FROM images WHERE product_id = ?", array($prod_id))->result_array();        
      }
