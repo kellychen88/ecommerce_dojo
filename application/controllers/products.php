@@ -18,7 +18,6 @@ class Products extends CI_Controller {
 
 	public function index()
 	{
-<<<<<<< Updated upstream
 
 // 		if ($this->input->post('sort') == '') {
 // 			$array['sort'] = "price";
@@ -29,9 +28,7 @@ class Products extends CI_Controller {
 // 			$arrat['sort'] = $this->input->post('sort');
 // 		}
 // var_dump($array);
-=======
-		// $this->session->unset_userdata('cart_qty');
-		// $this->session->unset_userdata('cart');
+	
 		if ($this->input->post('sort') == '') {
 			$array['sort'] = "price";
 		} elseif ($this->input->post('sort') == 'most popular') {
@@ -42,7 +39,7 @@ class Products extends CI_Controller {
 
 		//$array['name'] = "Products";
 
->>>>>>> Stashed changes
+
 		if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
 	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 	 	$start = ( $page - 1 ) * $limit;
@@ -143,12 +140,11 @@ class Products extends CI_Controller {
 		$array['category'] = $this->product->get_cat_id_by_product_id($prod_id);
 		$array['product']  = $this->product->get_product_by_id($prod_id);
 		$array['image']  = $this->product->get_image_by_id($prod_id);
-<<<<<<< Updated upstream
-=======
+
+
 		$array['product'] =  $this->product->get_product_by_id($prod_id);
 		// $array['image'] = $this->product->get_images_by_id($prod_id);
 
->>>>>>> Stashed changes
 		$this->load->view('prod_details_page', $array);
 	}
 	public function carts()
