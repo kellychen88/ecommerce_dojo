@@ -46,6 +46,30 @@ class Admin extends CI_Controller {
 		}	
 
 	}
+
+	public function filter_order(){
+		$status=$this->input->post('status_search');
+		if ($status=='all') {
+			$orders['orders'] = $this->product->display_all_orders();
+		}
+		else {
+			$orders['orders'] = $this->product->get_orders_by_status($status);
+		}
+		$this->load->view('display_orders', $orders);
+	}
+
+	public function edit_order_status(){
+//		var_dump($this->input->post()); die();
+		$status=$this->input->post('status');
+		$order_id=$this->input->post('order_id');
+
+		$this->product->edit_order_by_status($status,$order_id);
+
+		$orders['orders'] = $this->product->display_all_orders();
+		$this->load->view('display_orders', $orders);
+
+	}
+
 	public function display()
 	{
 		$orders['orders'] = $this->product->display_all_orders();
@@ -67,6 +91,8 @@ class Admin extends CI_Controller {
 		$order['order'] = $this->product->get_order_by_id($id);
 		$this->load->view('display_single_order', $order);
 	}
+
+
 
 	public function add()
 	{
@@ -229,35 +255,6 @@ class Admin extends CI_Controller {
 		}
 
 		redirect('/admin/edit/'.$product['product_id']);
-
-		// else
-		// {
-		// 	// upload file
-		// 	$data = array('upload_data' => $this->upload->data());
-		// 	$file_name=$data['upload_data']['file_name'];
-		// 	$image_path='../../assets/img/'.$file_name;
-
-
-		// 	$product['image_path']=$image_path;
-		// 	$product['file_name']=$file_name;
-
-		// 	var_dump($product); die();
-
-		// 	if ($product['action']=='add')
-		// 	{
-		// 		$this->product->add_product($product,$product['main']);
-
-		// 		// get last inserted product ID and add the category-product relationship
-		// 		$last_id=$this->product->get_lastInsertID();			
-		// 		$this->product->add_cat_relationships($product['cat'],$last_id['LAST_INSERT_ID()']);
-		// 	}
-		// 	elseif ($product['action']=='Edit')
-		// 	{
-		// 		$this->product->edit_product($product,$product['main']);
-		// 	}
-
-		// }
-
 	}
 	public function edit_action()
 	{

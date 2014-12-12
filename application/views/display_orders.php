@@ -1,3 +1,9 @@
+<?php 
+
+// var_dump($orders);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,14 +12,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap 101 Template</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-
   </head>
   <style type="text/css">
    .navbar-default .navbar-nav>li>a {
@@ -54,6 +57,30 @@
       margin-left: 38%;
    }
   </style>
+
+
+  <script type="text/javascript">
+  $(document).ready(function()
+  {
+    $(document).on('select', '#filter_form', function()
+    { 
+        alert('hello');
+    //   var form = $(this);
+    //   $.post(form.attr('action'),form.serialize(),function(data){
+    //     $('#notes').html(data);
+    //   });
+    //   return false;
+    });
+
+    // $(document).on('change', 'form.update_note textarea', function()
+    // {
+    //   $(this).parent().submit();
+    // });
+
+    // $('form').submit();
+  });
+
+  </script>
   <body>
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
@@ -77,12 +104,15 @@
     </nav>
 
     <div id="search_by_status">
-      <select value="status_search">
-        <option name="all"> Show All </option>
-        <option name="shipped"> Shipped </option>
-        <option name="proces"> Order in progress </option>
-        <option name="cancelled"> Cancelled </option>
-      </select>
+      <form action='/admin/filter_order' method='post' id='filter_form'>
+        <select name="status_search">
+          <option value="all"> Show All </option>
+          <option value="shipped"> Shipped </option>
+          <option value="process"> Order in progress </option>
+          <option value="cancelled"> Cancelled </option>
+          <input type='submit' value='Submit'>
+        </select>
+      </form>
     </div>
 <?php
     // var_dump($orders);
@@ -109,7 +139,8 @@
             <td><?=$order['street_address']?> <?=$order['city_state']?> <?=$order['zipcode']?></td>
             <td>$<?=$order['amount']?></td>
             <td>
-              <select value="status">
+              <form action='/admin/edit_order_status' method='post'>
+                <select name="status">
 <?php 
                 if($order['status'] == "shipped")
                   {
@@ -136,7 +167,11 @@
                     echo "<option value='cancelled'> Cancelled </option>";
                   }
 ?> 
-              </select>
+                </select>
+                <input type='hidden' name='order_id' value="<?=$order['order_id'];?>">                
+                <input type='submit' value='submit'>
+              </form>
+              
             </td>
           </tr>
 <?php
@@ -155,7 +190,7 @@
         <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
       </ul>
     </nav>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+    <!-- // <script src="js/bootstrap.min.js"></script> -->
   </body>
 </html>

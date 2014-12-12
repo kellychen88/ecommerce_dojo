@@ -119,6 +119,9 @@ class product extends CI_Model {
              VALUES({$data['shipping']}, {$data['amount']}, '{$data['status']}', NOW(), NOW())";
              return $this->db->query($query);
      }
+     function get_status($prod_id){
+
+     }
      function add_ordered_products($data)
      {
          $query = "INSERT INTO ordered_product (quantity, orders_id, product_id) 
@@ -151,6 +154,27 @@ class product extends CI_Model {
         $query = "SELECT orders_has_users.orders_id AS order_id, users.*, DATE_FORMAT(orders.created_at, '%c/%e/%y') as format_date, orders.amount, orders.status 
         FROM orders_has_users JOIN users ON users.id = orders_has_users.users_id JOIN orders ON orders.id = orders_has_users.orders_id";
         return $this->db->query($query)->result_array();  
+     }
+     function get_orders_by_status($status)
+     {
+        $query= "SELECT orders_has_users.orders_id AS order_id, users.*, DATE_FORMAT(orders.created_at, '%c/%e/%y') as format_date, orders.amount, orders.status 
+                FROM orders_has_users JOIN users ON users.id = orders_has_users.users_id JOIN orders ON orders.id = orders_has_users.orders_id
+                WHERE orders.status='{$status}'";
+        return $this->db->query($query)->result_array();  
+     }     
+     function edit_order_by_status($status,$order_id){
+
+        return $this->db->query("UPDATE orders SET status='{$status}' WHERE id='{$order_id}'");
+
+
+
+        $query= "SELECT orders_has_users.orders_id AS order_id, users.*, DATE_FORMAT(orders.created_at, '%c/%e/%y') as format_date, orders.amount, orders.status 
+                FROM orders_has_users JOIN users ON users.id = orders_has_users.users_id JOIN orders ON orders.id = orders_has_users.orders_id
+                WHERE orders.status='{$status}'";
+        return $this->db->query($query);  
+
+
+
      }
      function get_order_by_id($order_id)
      {
