@@ -86,7 +86,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Shopping Cart (5) <span class="caret"></span></a> -->
-          <a href="/products/carts">Shopping Cart (5)</a>
+          <a href="/products/carts">Shopping Cart (<?= $this->session->userdata('cart_qty')?>)</a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">Action</a></li>
             <li><a href="#">Another action</a></li>
@@ -101,7 +101,12 @@
 </nav>
 
 <?php 
+<<<<<<< HEAD
 		$main_subpath=substr($product['main_path'], 4, strlen($product['main_path'])-1);
+=======
+// var_dump($category);  var_dump($cat_name);   //die();
+		// $main_subpath=substr($product['main_path'], 4, strlen($product['main_path'])-1);
+>>>>>>> 8ab8e9babd2faffa6bd303f50f30abef83420999
 ?>
 <div class='container-main'>
 	<div class='left-section'>
@@ -119,17 +124,17 @@
 		</div>
 	</div>
 	<div class='right-section'>
-		<p><?=$product['description'] ?> </p>		<!-- <p>voluptate ipsum natus praesentium quia provident itaque commodi a, unde vel pariatur vero adipisci. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, totam, impedit. Excepturi quibusdam beatae inventore odit unde accusamus autem, quisquam necessitatibus nam qui illo officiis, eveniet nostrum porro rerum, molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, quis vitae rem inventore ut distinctio repellat est maiores dolorem, consequuntur obcaecati dolor quae eaque tempore amet ducimus non maxime dolorum.</p> -->
-		<form action='/admin/products' name='buy' method='post'>
+		<p> <?=$product['description']?> </p>		<!-- <p>voluptate ipsum natus praesentium quia provident itaque commodi a, unde vel pariatur vero adipisci. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, totam, impedit. Excepturi quibusdam beatae inventore odit unde accusamus autem, quisquam necessitatibus nam qui illo officiis, eveniet nostrum porro rerum, molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, quis vitae rem inventore ut distinctio repellat est maiores dolorem, consequuntur obcaecati dolor quae eaque tempore amet ducimus non maxime dolorum.</p> -->
+		<form action='/products/buy/<?=$product['id']?>' name='buy' method='post'>
 			<div class='form-group buy-qty' name='buy' method='post'>
 				<select class='form-control select-qty' name='qty'>
 
-					<option value="1">1 (<?=$product['price']?>)</option>
-					<option value="2">2 (<?=$product['price']*2?>)</option>
-					<option value="3">3 (<?=$product['price']*3?>)</option>
+					<option value="1">1 (<?=$product['price']?>) </option>
+					<option value="2">2 (<?=$product['price']*2?>) </option>
+					<option value="3">3 (<?=$product['price']*3?>) </option>
 
 				</select>
-				<button class='btn btn-primary buy-btn'>Buy</button>
+				<input class='btn btn-primary buy-btn' type="submit" value="Buy">
 			</div>
 		</form>
 	</div>

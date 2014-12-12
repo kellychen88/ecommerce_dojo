@@ -124,7 +124,7 @@
 	      <ul class="nav navbar-nav navbar-right">
 	        <li class="dropdown">
 	          <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Shopping Cart (5) <span class="caret"></span></a> -->
-	          <a href="/products/carts">Shopping Cart (5)</a>
+	          <a href="/products/carts">Shopping Cart (<?= $this->session->userdata('cart_qty')?>)</a>
 	          <ul class="dropdown-menu" role="menu">
 	            <li><a href="#">Action</a></li>
 	            <li><a href="#">Another action</a></li>
@@ -251,12 +251,14 @@
 		   	 	$prod_id=$each_page[$i]['id'];
 		   		$prod_name=$each_page[$i]['name'];
 		   		$prod_price=$each_page[$i]['price'];
-		   		   $prod_image=$product[$i]['main_path'];
-		   		   $sub_path=substr($prod_image, 4, strlen($prod_image)-1);
+		   		   // $prod_image=$product[$i]['main_path'];
+		   		   // $sub_path=substr($prod_image, 4, strlen($prod_image)-1);
 
 		   		echo "<div class='product'>";
-		   		//echo "<a href='/products/prod_details'></a>";
-		   		   echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
+
+		   		echo "<a href='/products/prod_details'></a>";
+		   
+		   		// echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
 		   		echo "<p class='price'><span>".$prod_price."</span></p>";
 		   		echo "<a href='/products/prod_details/$prod_id'><p class='prod_name'>".$prod_name."</p></a>";
 		   		echo "</div>"; 
