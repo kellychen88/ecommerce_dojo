@@ -101,12 +101,9 @@
 </nav>
 
 <?php 
-<<<<<<< HEAD
+
 		$main_subpath=substr($product['main_path'], 4, strlen($product['main_path'])-1);
-=======
-// var_dump($category);  var_dump($cat_name);   //die();
-		// $main_subpath=substr($product['main_path'], 4, strlen($product['main_path'])-1);
->>>>>>> 8ab8e9babd2faffa6bd303f50f30abef83420999
+
 ?>
 <div class='container-main'>
 	<div class='left-section'>
