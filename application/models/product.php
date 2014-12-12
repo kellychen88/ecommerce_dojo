@@ -82,6 +82,12 @@ class product extends CI_Model {
         return $this->db->query($query, array($prod_id))->result_array();
      }
 
+     function get_cat_name_by_product_id($prod_id){
+        $query = "SELECT category.name FROM category JOIN products_has_category ON category.id = products_has_category.category_id JOIN products ON products.id=products_has_category.products_id WHERE products.id = {$prod_id} ";
+//var_dump("get_cat_name_by_product_id"); var_dump($query); die();
+        return $this->db->query($query)->row_array();;
+     } // for go back
+
      function get_all_images_by_id($prod_id){
         return $this->db->query("SELECT * FROM images WHERE product_id = ?", array($prod_id))->result_array();        
      }
@@ -104,8 +110,26 @@ class product extends CI_Model {
      function add_shipping($data)
      {
          $query = "INSERT INTO users (name, street_address, city_state, zipcode, created_at, updated_at) 
-             VALUES(CONCAT('{$data['first_name_ship']}',.,'{$data['last_name_ship']}'), CONCAT('{$data['address1_ship']}',.,'{$data['address2_ship']}'), CONCAT('{$data['city_ship']}',.,'{$data['state_ship']}'), '{$data['zip_ship']}', NOW(), NOW())";
+             VALUES(CONCAT('{$data['first_name_ship']}','.','{$data['last_name_ship']}'), CONCAT('{$data['address1_ship']}','.','{$data['address2_ship']}'), CONCAT('{$data['city_ship']}','.','{$data['state_ship']}'), '{$data['zip_ship']}', NOW(), NOW())";
              return $this->db->query($query);
+     }
+     function add_order($data)
+     {
+         $query = "INSERT INTO orders (shipping, amount, status, created_at, updated_at) 
+             VALUES({$data['shipping']}, {$data['amount']}, '{$data['status']}', NOW(), NOW())";
+             return $this->db->query($query);
+     }
+     function add_ordered_products($data)
+     {
+         $query = "INSERT INTO ordered_product (quantity, orders_id, product_id) 
+             VALUES({$data['qty']}, {$data['order_id']}, {$data['id']})";
+             return $this->db->query($query);
+     }
+     function insert_orders_users($data)
+     {
+        $query = "INSERT INTO orders_has_users (orders_id, users_id) 
+            VALUES({$data['order_id']}, {$data['user_id']})";
+            return $this->db->query($query);
      }
      function check($user)
      {
@@ -124,15 +148,15 @@ class product extends CI_Model {
      }
      function display_all_orders()
      {
-        $query = "SELECT users_orders.id AS order_id, users.*, DATE_FORMAT(orders.created_at, '%c/%e/%y') as format_date, orders.amount, orders.status 
-        FROM users_orders JOIN users ON users.id = users_orders.users_id JOIN orders ON orders.id = users_orders.orders_id";
+        $query = "SELECT orders_has_users.orders_id AS order_id, users.*, DATE_FORMAT(orders.created_at, '%c/%e/%y') as format_date, orders.amount, orders.status 
+        FROM orders_has_users JOIN users ON users.id = orders_has_users.users_id JOIN orders ON orders.id = orders_has_users.orders_id";
         return $this->db->query($query)->result_array();  
      }
      function get_order_by_id($order_id)
      {
-        $query = "SELECT users_orders.id AS order_id, users.name, users.street_address, users.city_state, users.zipcode
-            FROM users_orders JOIN users ON users.id = users_orders.users_id 
-            WHERE users_orders.orders_id = {$order_id}";
+        $query = "SELECT orders_has_users.orders_id AS order_id, users.name, users.street_address, users.city_state, users.zipcode
+            FROM orders_has_users JOIN users ON users.id = orders_has_users.users_id 
+            WHERE orders_has_users.orders_id = {$order_id}";
         return $this->db->query($query)->row_array();  
      }
      function get_products_by_id($order_id)
@@ -142,5 +166,9 @@ class product extends CI_Model {
             JOIN products ON products.id = ordered_product.product_id
             WHERE ordered_product.orders_id = {$order_id}";
         return $this->db->query($query)->result_array();
+     }
+     function get_last_id()
+     {
+        return $this->db->insert_id();
      }
 }

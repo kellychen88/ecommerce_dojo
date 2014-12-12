@@ -18,8 +18,9 @@
 	<!-- // <script type="text/javascript" scr="scripts/bootstrap/js/bootstrap.min.js"></script> -->
 	<script type="text/javascript">
 
-		$(document).ready(function(){
-			$(".sort-form").change(function() {
+	$(document).ready(function(){
+		$('.sort-select').change(function() {
+			alert("in ready");
 			var select = $(".sort-form option:selected").val();
 			alert(select);
 		});
@@ -123,7 +124,7 @@
 	      <ul class="nav navbar-nav navbar-right">
 	        <li class="dropdown">
 	          <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Shopping Cart (5) <span class="caret"></span></a> -->
-	          <a href="/products/carts">Shopping Cart (5)</a>
+	          <a href="/products/carts">Shopping Cart (<?= $this->session->userdata('cart_qty')?>)</a>
 	          <ul class="dropdown-menu" role="menu">
 	            <li><a href="#">Action</a></li>
 	            <li><a href="#">Another action</a></li>
@@ -236,7 +237,7 @@
 				<div class='sort'>
 					<p>Sorted by </p>
 					<form action='/products/sort' method='post'>
-						<select name='sort' class='sort-form'>
+						<select name='sort' class='sort-select'>
 							<option value='sort_price'>Price</option>
 							<option value='sort_popular'>Most Popular</option>
 						</select>
@@ -250,12 +251,14 @@
 		   	 	$prod_id=$each_page[$i]['id'];
 		   		$prod_name=$each_page[$i]['name'];
 		   		$prod_price=$each_page[$i]['price'];
-		   		   $prod_image=$product[$i]['main_path'];
-		   		   $sub_path=substr($prod_image, 4, strlen($prod_image)-1);
+		   		   // $prod_image=$product[$i]['main_path'];
+		   		   // $sub_path=substr($prod_image, 4, strlen($prod_image)-1);
 
 		   		echo "<div class='product'>";
+
 		   		echo "<a href='/products/prod_details'></a>";
-		   		   echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
+		   
+		   		// echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
 		   		echo "<p class='price'><span>".$prod_price."</span></p>";
 		   		echo "<a href='/products/prod_details/$prod_id'><p class='prod_name'>".$prod_name."</p></a>";
 		   		echo "</div>"; 
