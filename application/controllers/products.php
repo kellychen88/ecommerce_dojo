@@ -18,16 +18,6 @@ class Products extends CI_Controller {
 
 	public function index()
 	{
-
-// 		if ($this->input->post('sort') == '') {
-// 			$array['sort'] = "price";
-// 		} elseif ($this->input->post('sort') == 'most popular') {
-// 			$array['sort'] = "quantity_sold";
-	
-// 	} else {
-// 			$arrat['sort'] = $this->input->post('sort');
-// 		}
-// var_dump($array);
 		if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
 	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 	 	$start = ( $page - 1 ) * $limit;

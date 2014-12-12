@@ -18,9 +18,9 @@
 	<!-- // <script type="text/javascript" scr="scripts/bootstrap/js/bootstrap.min.js"></script> -->
 	<script type="text/javascript">
 
-		$(document).ready(function(){
-			$('.sort-select').change(function() {
-				alert("in ready");
+	$(document).ready(function(){
+		$('.sort-select').change(function() {
+			alert("in ready");
 			var select = $(".sort-form option:selected").val();
 			alert(select);
 		});

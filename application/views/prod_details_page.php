@@ -101,7 +101,6 @@
 </nav>
 
 <?php 
-var_dump($category);  var_dump($cat_name);   //die();
 		$main_subpath=substr($product['main_path'], 4, strlen($product['main_path'])-1);
 ?>
 <div class='container-main'>
