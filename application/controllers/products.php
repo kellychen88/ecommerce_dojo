@@ -18,6 +18,7 @@ class Products extends CI_Controller {
 
 	public function index()
 	{
+<<<<<<< Updated upstream
 
 // 		if ($this->input->post('sort') == '') {
 // 			$array['sort'] = "price";
@@ -28,6 +29,20 @@ class Products extends CI_Controller {
 // 			$arrat['sort'] = $this->input->post('sort');
 // 		}
 // var_dump($array);
+=======
+		// $this->session->unset_userdata('cart_qty');
+		// $this->session->unset_userdata('cart');
+		if ($this->input->post('sort') == '') {
+			$array['sort'] = "price";
+		} elseif ($this->input->post('sort') == 'most popular') {
+			$array['sort'] = "quantity_sold";
+		} else {
+			$arrat['sort'] = $this->input->post('sort');
+		}
+
+		//$array['name'] = "Products";
+
+>>>>>>> Stashed changes
 		if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
 	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 	 	$start = ( $page - 1 ) * $limit;
@@ -37,6 +52,7 @@ class Products extends CI_Controller {
 
 		$this->load->view('category_page', $array);
 	}
+	
 	public function show($id, $name)
 	 {
 	 	//echo $id; echo $name;
@@ -59,6 +75,23 @@ class Products extends CI_Controller {
 	}	
 	public function add_shipping()
 	{
+		$cart = $this->session->userdata('cart');
+		$shipping = 10;
+		$grand_total = 0;
+		foreach ($cart as $item)
+		{
+			foreach($item as $key => $value)
+			{
+				$prod_id = $value;
+				$prod_qty = $key;
+				$one_item = $this->product->get_product_by_id($prod_id);
+				$total = (($one_item['price'])*($key));
+				$grand_total += $total;		
+			}
+		}
+		$order['amount'] = $grand_total;
+		$order['shipping'] = $shipping;
+		$order['status'] = "process";
 		$ship['first_name_ship'] = $this->input->post('first_name_ship');
 		$ship['last_name_ship'] = $this->input->post('last_name_ship');
 		$ship['address1_ship'] = $this->input->post('address1_ship');
@@ -67,8 +100,29 @@ class Products extends CI_Controller {
 		$ship['state_ship'] = $this->input->post('state_ship');
 		$ship['zip_ship'] = $this->input->post('zip_ship');
 		$this->product->add_shipping($ship);
+		$user_id = $this->product->get_last_id();
+		$this->product->add_order($order);
+		$order_id = $this->product->get_last_id();
+		$orders_users = array(
+			"user_id" => $user_id,
+			"order_id" => $order_id
+			);
+		$this->product->insert_orders_users($orders_users);
+		foreach($cart as $item)
+		{
+			foreach($item as $key => $value)
+			{
+				$items = array(
+					"id" => $value,
+					"qty" => $key,
+					"order_id" => $order_id
+					);
+			}
+			$this->product->add_ordered_products($items);
+		}
+		$this->session->unset_userdata('cart_qty');
+		$this->session->unset_userdata('cart');
 		redirect('products/index');
-
 	}
 	
 	public function search()
@@ -89,17 +143,54 @@ class Products extends CI_Controller {
 		$array['category'] = $this->product->get_cat_id_by_product_id($prod_id);
 		$array['product']  = $this->product->get_product_by_id($prod_id);
 		$array['image']  = $this->product->get_image_by_id($prod_id);
+<<<<<<< Updated upstream
+=======
+		$array['product'] =  $this->product->get_product_by_id($prod_id);
+		// $array['image'] = $this->product->get_images_by_id($prod_id);
+
+>>>>>>> Stashed changes
 		$this->load->view('prod_details_page', $array);
 	}
 	public function carts()
 	{
-		$this->load->view('carts_page');
+		$items = array();
+		$cart = $this->session->userdata('cart');
+		foreach ($cart as $item)
+		{
+			foreach($item as $key => $value)
+			{
+				$prod_id = $value;
+				$one_item= $this->product->get_product_by_id($prod_id);
+				$items['items'][] = array(
+					"name" => $one_item['name'],
+					"price" => $one_item['price'],
+					"qty" => $key,
+					"total" => (($one_item['price'])*($key))
+					);
+			}
+		}
+		$this->load->view('carts_page', $items);
 	}
 
 	public function sort() 
 	{
 			$this->_sort = $this->input->post('sort'); // $_POST("sort");
 			echo $this->_sort;
+	}
+	public function buy($id)
+	{
+		$cart_qty = $this->session->userdata('cart_qty');
+		$cart = $this->session->userdata('cart');
+		$item['id'] = $id;
+		$item['qty'] = $this->input->post('qty');
+		$cart_qty += $item['qty'];
+		$cart_item = array(
+				"{$item['qty']}" => $item['id']
+			);
+		$cart[] = $cart_item;
+		$this->session->set_userdata('cart', $cart);
+		$this->session->set_userdata('cart_qty', $cart_qty);
+		redirect('/products/carts');
 	}
 
 }

@@ -32,6 +32,7 @@
 			padding: 70px;
 		}
 		.container{margin-bottom: 20px}
+		.shipping{text-align: right;}
 		.total{text-align: right;}
 		.row-spacing{padding-top:20px;}
 
@@ -72,7 +73,7 @@
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav navbar-right">
 	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Shopping Cart (5) <span class="caret"></span></a>
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Shopping Cart (<?= $this->session->userdata('cart_qty')?>) <span class="caret"></span></a>
 	          <ul class="dropdown-menu" role="menu">
 	            <li><a href="#">Action</a></li>
 	            <li><a href="#">Another action</a></li>
@@ -96,41 +97,28 @@
 					<th>Total</th>
 				</thead>
 				<tbody>
+<?php
+// var_dump($items);
+$grand_total = 10;
+	foreach($items as $item)
+		{
+?>				
 					<tr>
-						<td>Black Belt for Staff</td>
-						<td>$19.99</td>
-						<td>1</td>
-						<td>$19.99</td>
+						<td><?=$item['name']?></td>
+						<td><?=$item['price']?></td>
+						<td><?=$item['qty']?></td>
+						<td><?=$item['total']?></td>
 					</tr>
-					<tr>
-						<td>Black Belt for Staff</td>
-						<td>$19.99</td>
-						<td>1</td>
-						<td>$19.99</td>
-					</tr>
-					<tr>
-						<td><br></td>
-						<td><br></td>
-						<td><br></td>
-						<td><br></td>
-					</tr>				
-					<tr>
-						<td><br></td>
-						<td><br></td>
-						<td><br></td>
-						<td><br></td>
-					</tr>				
-					<tr>
-						<td><br></td>
-						<td><br></td>
-						<td><br></td>
-						<td><br></td>
-					</tr>				
+<?php
+$grand_total += $item['total'];			
+		}	
+?>						
 				</tbody>
 			</table>
 			<div class='total-btn pull-right'>
-				<p class='total'>Total: $49.96</p>
-				<button type="button" class="btn btn-success navbar-btn green-btn">Continue Shopping</button>
+				<p class='shipping'>Shipping: $10</p>
+				<p class='total'>Total: $<?=$grand_total?></p>
+				<a href="/"><button type="button" class="btn btn-success navbar-btn green-btn">Continue Shopping</button></a>
 			</div>
 		</div> <!-- end of "cart-table" div -->
 		<div class='information'>
