@@ -18,11 +18,20 @@ class Products extends CI_Controller {
 
 	public function index()
 	{
+
+	if ($this->input->post('sort') == '') {
+			$array['sort'] = "price";
+		} elseif ($this->input->post('sort') == 'most popular') {
+			$array['sort'] = "quantity_sold";
+		} else {
+			$array['sort'] = $this->input->post('sort');
+		}
+
 		if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
 	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 	 	$start = ( $page - 1 ) * $limit;
 		$array['sort'] = "price";
-	 	$array['each_page'] = $this->product->product_pages($start, $limit, $array['sort'] );
+	 	$array['each_page'] = $this->product->product_sorted_pages($start, $limit, $array['sort'] );
 	 	$array['category'] = $this->product->get_all_categories();
 		$array['product']  = $this->product->get_all_products();	
 		$array['id'] = 'all';
@@ -33,26 +42,24 @@ class Products extends CI_Controller {
 	
 	public function show($id, $name)
 	 {
+
 	 	if ($this->input->post('sort') == 'sort_popular') {
 			$array['sort'] = "quantity_sold";
 		}  else {
 			$array['sort'] = "price";
 		} 
 
-	 	//echo $id; echo $name;
 	 	if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
 	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 	 	$start = ( $page - 1 ) * $limit;
 		$name = str_replace('%20', ' ', $name);
 		$array['id'] = $id;
 		$array['name'] = $name; 
-		// $array['category'] = $this->product->get_all_categories();
 		$array['category'] = $this->product->get_all_categories();
-//var_dump($array);
+
 		if ($id == 'all') {
 			$array['product']  = $this->product->get_all_products($array['sort']);
-			//var_dump($array['sort']);  var_dump($array['product']); 
-			$array['each_page'] = $this->product->product_pages($start, $limit, $array['sort']);	
+			$array['each_page'] = $this->product->product_sorted_pages($start, $limit, $array['sort']);	
 
 		} else {
 			$array['product']  = $this->product->get_product_by_category_id($id);
@@ -70,10 +77,10 @@ class Products extends CI_Controller {
 		{
 			foreach($item as $key => $value)
 			{
-				$prod_id = $value;
-				$prod_qty = $key;
+				$prod_id = $key;
+				$prod_qty = $value;
 				$one_item = $this->product->get_product_by_id($prod_id);
-				$total = (($one_item['price'])*($key));
+				$total = (($one_item['price'])*($value));
 				$grand_total += $total;		
 			}
 		}
@@ -101,8 +108,8 @@ class Products extends CI_Controller {
 			foreach($item as $key => $value)
 			{
 				$items = array(
-					"id" => $value,
-					"qty" => $key,
+					"id" => $key,
+					"qty" => $value,
 					"order_id" => $order_id
 					);
 			}
@@ -113,6 +120,58 @@ class Products extends CI_Controller {
 		redirect('products/index');
 	}
 	
+	public function edit_qty_cart($id)
+	{
+		$new_qty = $this->input->post('qty');
+		$cart = $this->session->userdata('cart');
+		$cart_qty = $this->session->userdata('cart_qty');
+
+		foreach ($cart as $key_cart => $item)
+		{
+			if (isset($item[$id]))
+			{ 	
+				$qty = $item[$id];
+				$card_id_update_val=$key_cart;
+			}
+		}
+		$cart[$card_id_update_val] = array(
+			"$id" => $new_qty
+			);
+		$adjust = ($new_qty - $qty);
+
+		if ($adjust > 0)
+		{
+			$cart_qty = $cart_qty + $adjust;
+		}
+		else
+		{
+			$neg_adjust = abs($adjust);
+			$cart_qty = $cart_qty - $neg_adjust;
+		}	
+		// var_dump($adjust);
+		$this->session->set_userdata('cart', $cart);
+		$this->session->set_userdata('cart_qty', $cart_qty);
+		redirect('/products/carts');
+	}
+	public function delete_item_cart($id)
+	{
+		$cart = $this->session->userdata('cart');
+		$cart_qty = $this->session->userdata('cart_qty');
+		foreach ($cart as $key_cart => $item)
+		{
+			if (isset($item[$id]))
+			{ 	
+				$qty = $item[$id];
+				$card_id_delete=$key_cart;
+			}
+		}
+		$cart_qty -= $qty;
+		unset($cart[$card_id_delete]);
+		$this->session->set_userdata('cart', $cart);
+		$this->session->set_userdata('cart_qty', $cart_qty);
+		redirect('/products/carts');
+		// var_dump($cart);
+	}
 	public function search()
 	{
 
@@ -142,18 +201,24 @@ class Products extends CI_Controller {
 	{
 		$items = array();
 		$cart = $this->session->userdata('cart');
-		foreach ($cart as $item)
+		if($cart)
 		{
-			foreach($item as $key => $value)
+			foreach ($cart as $item)
 			{
-				$prod_id = $value;
-				$one_item= $this->product->get_product_by_id($prod_id);
-				$items['items'][] = array(
-					"name" => $one_item['name'],
-					"price" => $one_item['price'],
-					"qty" => $key,
-					"total" => (($one_item['price'])*($key))
-					);
+
+				foreach($item as $key => $value)
+				{
+
+					$prod_id = $key;
+					$one_item= $this->product->get_product_by_id($prod_id);
+					$items['items'][] = array(
+						"id" => $one_item['id'],
+						"name" => $one_item['name'],
+						"price" => $one_item['price'],
+						"qty" => $value,
+						"total" => (($one_item['price'])*($value))
+						);
+				}
 			}
 		}
 		$this->load->view('carts_page', $items);
@@ -167,8 +232,9 @@ class Products extends CI_Controller {
 		$item['qty'] = $this->input->post('qty');
 		$cart_qty += $item['qty'];
 		$cart_item = array(
-				"{$item['qty']}" => $item['id']
-			);
+				"{$item['id']}" => $item['qty']
+				);
+		// $cart_item[$item['id']] = $item['qty'];
 		$cart[] = $cart_item;
 		$this->session->set_userdata('cart', $cart);
 		$this->session->set_userdata('cart_qty', $cart_qty);

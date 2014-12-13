@@ -1,3 +1,9 @@
+<?php 
+
+// var_dump($orders);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,16 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap 101 Template</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-
-  </head>
-  <style type="text/css">
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <style type="text/css">
    .navbar-default .navbar-nav>li>a {
       color:white;
     }
@@ -54,6 +52,16 @@
       margin-left: 38%;
    }
   </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <!-- // <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <!-- // <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script> -->
+
+
+  
+
+</head>
+ 
   <body>
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
@@ -77,73 +85,23 @@
     </nav>
 
     <div id="search_by_status">
-      <select value="status_search">
-        <option name="all"> Show All </option>
-        <option name="shipped"> Shipped </option>
-        <option name="proces"> Order in progress </option>
-        <option name="cancelled"> Cancelled </option>
-      </select>
+      <form action='/admin/filter_order' method='post' id='filter_form'>
+        <select name="status_search">
+          <option value="all"> Show All </option>
+          <option value="shipped"> Shipped </option>
+          <option value="process"> Order in progress </option>
+          <option value="cancelled"> Cancelled </option>
+          <!-- <input type='submit' value='Submit'> -->
+        </select>
+      </form>
     </div>
 <?php
     // var_dump($orders);
 ?>    
-      <!-- Table -->
-      <table class="table table-striped table-bordered">
-        <thead>
-          <th> Order ID </th>
-          <th> Name </th>
-          <th> Date </th>
-          <th> Shipping Address </th>
-          <th> Total </th>
-          <th> Status </th>
-        </thead>
-        <tbody>
-<?php
-      foreach($orders as $order)
-      {
-?>
-          <tr>
-            <td><a href="/admin/single_order/<?=$order['order_id']?>"><?=$order['order_id']?></a></td>
-            <td><?=$order['name']?></td>
-            <td><?=$order['format_date']?></td>
-            <td><?=$order['street_address']?> <?=$order['city_state']?> <?=$order['zipcode']?></td>
-            <td>$<?=$order['amount']?></td>
-            <td>
-              <select value="status">
-<?php 
-                if($order['status'] == "shipped")
-                  {
-                    echo "<option value='shipped' selected> Shipped </option>";
-                  }
-                  else
-                  {
-                    echo "<option value='shipped'> Shipped </option>";
-                  }  
-                if($order['status'] == "process")
-                  {
-                    echo "<option value='process' selected> Order in Process </option>";
-                  }
-                  else
-                  {
-                    echo "<option value='process'> Order in process </option>";
-                  }
-                if($order['status'] == "cancelled")
-                  {
-                    echo "<option value='cancelled' selected> Cancelled </option>";
-                  }
-                  else
-                  {
-                    echo "<option value='cancelled'> Cancelled </option>";
-                  }
-?> 
-              </select>
-            </td>
-          </tr>
-<?php
-      }
-?>            
-        </tbody>
-      </table>
+
+    <div id='order_data'></div>
+
+
     <nav>
       <ul class="pagination">
         <li class="disabled"><span aria-hidden="true">&laquo;</span></li>
@@ -155,7 +113,39 @@
         <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
       </ul>
     </nav>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+  $(document).ready(function()
+  {
+    $(document).on('submit', 'form', function()
+    { 
+      var form = $(this);
+      $.post(form.attr('action'),form.serialize(),function(data){
+        $('#order_data').html(data);
+      });
+      return false;
+    });
+
+    //filter orders by status
+    $(document).on('change', '#filter_form', function()
+    {
+      $(this).submit();
+    });
+
+    //change status (the form is inside the partial)
+    $(document).on('change', '#change_status', function()
+    {
+      $(this).submit();
+    });
+
+    $('#filter_form').submit();
+  });
+
+  </script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+    <!-- // <script src="js/bootstrap.min.js"></script> -->
   </body>
 </html>

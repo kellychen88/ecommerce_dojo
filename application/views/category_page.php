@@ -103,6 +103,10 @@
 			width: auto;
 			display: inline-block;
 		}
+		.navbar_brand, .dropdown-toggle{
+			margin-top: 15px;
+			color:gray;
+		}
 	</style>
 </head>
 <body>
@@ -125,12 +129,12 @@
 	        <li class="dropdown">
 	          <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Shopping Cart (5) <span class="caret"></span></a> -->
 	          <a href="/products/carts">Shopping Cart (<?= $this->session->userdata('cart_qty')?>)</a>
-	          <ul class="dropdown-menu" role="menu">
+	         <!--  <ul class="dropdown-menu" role="menu">
 	            <li><a href="#">Action</a></li>
 	            <li><a href="#">Another action</a></li>
 	            <li><a href="#">Something else here</a></li>
 	            <li class="divider"></li>
-	            <li><a href="#">Separated link</a></li>
+	            <li><a href="#">Separated link</a></li> -->
 	          </ul>
 	        </li>
 	      </ul>
@@ -239,7 +243,7 @@
 					<form action='/products/show/<?= $id ?>/<?= $name ?>' name='sort-form' method='post'>
 						<select name='sort' class='sort-select'>
 							<option value='sort_price'>Price</option>
-							<option value='sort_popular' selected>Most Popular</option>
+							<option value='sort_popular'>Most Popular</option>
 						</select>
 						<input type="submit" name='search'>
 						<!-- <input type="submit" name='search' class='hidden'> -->
