@@ -43,7 +43,16 @@
 			width: 60px; display: inline-block; 
 			margin:0px, 30px 0px 0px; 
 		}
-		.shipping{margin-top:0px;}
+		.shipping
+		{
+			margin-top:0px;
+			text-align:left;
+			margin-bottom: 20px;
+		}
+		#shipping
+		{
+			text-align:right;
+		}
 		.slash{display:inline-block; font-size:20px; margin-top: 2px; color: gray;}
 		#expiration input, .slash{vertical-align: top;}
 
@@ -52,7 +61,29 @@
 		.navbar-brand, .dropdown-toggle{color: white;}
 		/*.expiration{display: inline;}*/
 		/*#expiration{border: solid 1px gray;}*/
-	
+		td{
+			text-align: left;
+			padding: 12px;
+		}
+		td>a{
+			margin-left: 30px;
+			display:inline-block;
+		}
+		.navbar_brand, .dropdown-toggle{
+			margin-top: 15px;
+			color:gray;
+		}
+		td>form>input[type='number']{
+			width: 40px;
+		}
+		td>form{
+			display: inline-block;
+		}
+		#update{
+			color: rgb(36, 170, 242);
+			background: transparent;
+			border: transparent;
+		}
 	</style>
 </head>
 <body>
@@ -73,14 +104,16 @@
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav navbar-right">
 	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Shopping Cart (<?= $this->session->userdata('cart_qty')?>) <span class="caret"></span></a>
-	          <ul class="dropdown-menu" role="menu">
+	          <a href="#">Shopping Cart (<?= $this->session->userdata('cart_qty')?>) <span class="caret"></span></a>
+	          <!-- aria-expanded="false" -->
+	          <!-- data-toggle="dropdown"  -->
+	          <!-- <ul class="dropdown-menu" role="menu">
 	            <li><a href="#">Action</a></li>
 	            <li><a href="#">Another action</a></li>
 	            <li><a href="#">Something else here</a></li>
 	            <li class="divider"></li>
 	            <li><a href="#">Separated link</a></li>
-	          </ul>
+	          </ul> -->
 	        </li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
@@ -98,25 +131,38 @@
 				</thead>
 				<tbody>
 <?php
-// var_dump($items);
 $grand_total = 10;
+
+if(isset($items))
+{
 	foreach($items as $item)
 		{
 ?>				
 					<tr>
 						<td><?=$item['name']?></td>
-						<td><?=$item['price']?></td>
-						<td><?=$item['qty']?></td>
-						<td><?=$item['total']?></td>
+						<td>$ <?=$item['price']?></td>
+						<td>
+							<form action="/products/edit_qty_cart/<?=$item['id']?>" method="post">
+								<input type="number" name = "qty" value = "<?=$item['qty']?>">
+								<input id="update" type="submit" value="update">
+							</form>
+							<a href="/products/delete_item_cart/<?=$item['id']?>">
+								<span class="glyphicon glyphicon-trash">
+									<button class="hidden"></button> 
+								</span>
+							</a>
+						</td>
+						<td>$ <?=$item['total']?></td>
 					</tr>
 <?php
 $grand_total += $item['total'];			
-		}	
+		}
+}			
 ?>						
 				</tbody>
 			</table>
 			<div class='total-btn pull-right'>
-				<p class='shipping'>Shipping: $10</p>
+				<p id='shipping'>Shipping: $10</p>
 				<p class='total'>Total: $<?=$grand_total?></p>
 				<a href="/"><button type="button" class="btn btn-success navbar-btn green-btn">Continue Shopping</button></a>
 			</div>
