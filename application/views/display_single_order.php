@@ -1,3 +1,8 @@
+<?php 
+  var_dump($products);
+  var_dump($orders)
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -158,15 +163,15 @@
       <p> Total Price: $<?php echo ($product['amount']+$product['shipping'])?></p>
     </div>
 <?php
-  if($product['status'] = "shipped")
+  if($product['status'] == "shipped")
   {
     $status = "success";
   }
-  elseif($product['status'] = "process")
+  elseif($product['status'] == "process")
   {
     $status = "info";
   }
-  elseif($product['status'] = "cancelled")
+  elseif($product['status'] == "cancelled")
   {
     $status = "danger";
   }

@@ -55,7 +55,8 @@ class Admin extends CI_Controller {
 		else {
 			$orders['orders'] = $this->product->get_orders_by_status($status);
 		}
-		$this->load->view('display_orders', $orders);
+		// $this->load->view('display_orders', $orders);
+		$this->load->view('display_orders_partial', $orders);
 	}
 
 	public function edit_order_status(){
