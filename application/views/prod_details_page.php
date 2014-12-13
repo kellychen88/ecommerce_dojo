@@ -30,8 +30,9 @@
 		}
 		.container-main{padding-left: 20px;}
 		.left-section{width:350px; display: inline-block; vertical-align: top;}
-		.right-section{width: 500px; display: inline-block; vertical-align: top; margin-top: 40px;}
-		.right-section p{font-size: 18px;}
+		.middle-section{width: 500px; display: inline-block; vertical-align: top; margin-top: 40px;}
+		.middle-section p{font-size: 18px;}
+		.right-section{width:350px; margin-top: 40px; margin-left: 25px; display: inline-block; }
 		.product{
 			position: relative;
 			display: inline-block;
@@ -60,11 +61,15 @@
 			text-align: right;
 			padding-right:10px;
 		}
-		.buy-qty{margin-left: 320px}
-		.prod_name{font-size: 15px; margin-bottom: 20px;}
-		.select-qty{width:60%; display: inline-block;}
-		.buy-btn{display: inline-block;}
+		.buy-qty{
 
+			display: inline-block;
+		}
+		.desc{display: inline-block;}
+		.prod_name{font-size: 15px; margin-bottom: 20px;}
+		.select-qty{width:60%; height: 35px; display: inline-block;}
+	
+		
 	</style>
 </head>
 <body>
@@ -100,41 +105,41 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<?php 
-
-		$main_subpath=substr($product['main_path'], 4, strlen($product['main_path'])-1);
-
-?>
 <div class='container-main'>
 	<div class='left-section'>
 		<a href='/products/show/<?=$category['category_id'] ?>/<?=$cat_name['name'] ?> '>Go Back</a>
 		<h1><?= $product['name'] ?></h1>
-		<img class='main-img' src='../../<?= $main_subpath ?> '>
+		<img class='main-img' src='../../<?= $product['main_path'] ?> '>
 		<div class='thumbnail1'>
 			<?php 
 				
 				for($i = count($image) - 1; $i >= 0; $i--) {
-					$image_subpath=substr($image[$i]['image_path'], 4, strlen($image[$i]['image_path'])-1);
-					echo "<a><img class='thumbnail-img' src='../../". $image_subpath ."'></a>"; 
+					echo "<a><img class='thumbnail-img' src='../../". $image[$i]['image_path'] ."'></a>"; 
 				}
 			?>
 		</div>
 	</div>
+	<div class='middle-section'>
+		<p class='desc'> <?=$product['description']?> </p>		<!-- <p>voluptate ipsum natus praesentium quia provident itaque commodi a, unde vel pariatur vero adipisci. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, totam, impedit. Excepturi quibusdam beatae inventore odit unde accusamus autem, quisquam necessitatibus nam qui illo officiis, eveniet nostrum porro rerum, molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, quis vitae rem inventore ut distinctio repellat est maiores dolorem, consequuntur obcaecati dolor quae eaque tempore amet ducimus non maxime dolorum.</p> -->
+	</div>
+
 	<div class='right-section'>
-		<p> <?=$product['description']?> </p>		<!-- <p>voluptate ipsum natus praesentium quia provident itaque commodi a, unde vel pariatur vero adipisci. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, totam, impedit. Excepturi quibusdam beatae inventore odit unde accusamus autem, quisquam necessitatibus nam qui illo officiis, eveniet nostrum porro rerum, molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, quis vitae rem inventore ut distinctio repellat est maiores dolorem, consequuntur obcaecati dolor quae eaque tempore amet ducimus non maxime dolorum.</p> -->
 		<form action='/products/buy/<?=$product['id']?>' name='buy' method='post'>
 			<div class='form-group buy-qty' name='buy' method='post'>
-				<select class='form-control select-qty' name='qty'>
+				<select class='select-qty' name='qty'>
 
 					<option value="1">1 (<?=$product['price']?>) </option>
 					<option value="2">2 (<?=$product['price']*2?>) </option>
 					<option value="3">3 (<?=$product['price']*3?>) </option>
 
 				</select>
+
 				<input class='btn btn-primary buy-btn' type="submit" value="Buy">
 			</div>
 		</form>
 	</div>
+
+
 	<div class='similar-items'>
 		<h2>Similar Items</h2>
 		<div class='product'>

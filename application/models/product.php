@@ -2,17 +2,21 @@
 
 class product extends CI_Model {
     function get_all_categories()
-     {
-         return $this->db->query("SELECT * FROM category")->result_array();
+     {   
+         return $this->db->query("SELECT * FROM category ")->result_array();
      }
     function get_all_products()
-     {
-         return $this->db->query("SELECT * FROM products")->result_array();
+     {   //echo "Hello ".$sort;
+      
+         // return $this->db->query("SELECT * FROM products ORDER BY ?", array($sort))->result_array() ;
+        // $query = "SELECT * FROM products ORDER BY {$sort} ";
+        $query = "SELECT * FROM products";
+        return $this->db->query($query)->result_array();
      }
 
-     function product_pages($start, $limit)
+     function product_pages($start, $limit, $sort)
     {
-        $query = "SELECT * FROM products LIMIT {$start}, {$limit}";
+        $query = "SELECT * FROM products ORDER BY {$sort} DESC LIMIT {$start}, {$limit} ";
         return $this->db->query($query)->result_array();
     }
     function get_product_by_id($id)

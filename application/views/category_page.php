@@ -236,11 +236,14 @@
 		
 				<div class='sort'>
 					<p>Sorted by </p>
-					<form action='/products/sort' method='post'>
+					<form action='/products/show/<?= $id ?>/<?= $name ?>' name='sort-form' method='post'>
 						<select name='sort' class='sort-select'>
 							<option value='sort_price'>Price</option>
-							<option value='sort_popular'>Most Popular</option>
+							<option value='sort_popular' selected>Most Popular</option>
 						</select>
+						<input type="submit" name='search'>
+						<!-- <input type="submit" name='search' class='hidden'> -->
+
 					</form>
 				</div> 
 		   	</div> 
@@ -251,14 +254,11 @@
 		   	 	$prod_id=$each_page[$i]['id'];
 		   		$prod_name=$each_page[$i]['name'];
 		   		$prod_price=$each_page[$i]['price'];
-		   		   // $prod_image=$product[$i]['main_path'];
-		   		   // $sub_path=substr($prod_image, 4, strlen($prod_image)-1);
+		   		$prod_image=$each_page[$i]['main_path'];
+		   		//$sub_path=substr($prod_image, 4, strlen($prod_image)-1);
 
 		   		echo "<div class='product'>";
-
-		   		echo "<a href='/products/prod_details'></a>";
-		   
-		   		// echo "<a href='/products/prod_details/$prod_id'><img src='../../".$sub_path."'></a>";
+		   		echo "<a href='/products/prod_details/$prod_id'><img src='../../".$prod_image."'></a>";
 		   		echo "<p class='price'><span>".$prod_price."</span></p>";
 		   		echo "<a href='/products/prod_details/$prod_id'><p class='prod_name'>".$prod_name."</p></a>";
 		   		echo "</div>"; 

@@ -2,7 +2,7 @@
 
 class Products extends CI_Controller {
 
-	private $_sort = 'sort_price';
+	private $sort = 'sort_price';
 
 	public function __construct()
 	{
@@ -18,49 +18,47 @@ class Products extends CI_Controller {
 
 	public function index()
 	{
-
-
-
-	
-		if ($this->input->post('sort') == '') {
-			$array['sort'] = "price";
-		} elseif ($this->input->post('sort') == 'most popular') {
-			$array['sort'] = "quantity_sold";
-		} else {
-			$array['sort'] = $this->input->post('sort');
-		}
-
-		//$array['name'] = "Products";
-
-
 		if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
 	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 	 	$start = ( $page - 1 ) * $limit;
-	 	$array['each_page'] = $this->product->product_pages($start, $limit);
+		$array['sort'] = "price";
+	 	$array['each_page'] = $this->product->product_pages($start, $limit, $array['sort'] );
+	 	$array['category'] = $this->product->get_all_categories();
 		$array['product']  = $this->product->get_all_products();	
-		$array['category'] = $this->product->get_all_categories();
-
+		$array['id'] = 'all';
+		$array['name'] = 'All products';
+		
 		$this->load->view('category_page', $array);
 	}
 	
 	public function show($id, $name)
 	 {
+	 	if ($this->input->post('sort') == 'sort_popular') {
+			$array['sort'] = "quantity_sold";
+		}  else {
+			$array['sort'] = "price";
+		} 
+
 	 	//echo $id; echo $name;
 	 	if($this->input->get('limit')){ $limit = $this->input->get('limit');}else{$limit = 8;};
 	 	if($this->input->get('page')){ $page = $this->input->get('page');}else{$page = 1;};
 	 	$start = ( $page - 1 ) * $limit;
 		$name = str_replace('%20', ' ', $name);
 		$array['id'] = $id;
-		$array['name'] = $name;
+		$array['name'] = $name; 
+		// $array['category'] = $this->product->get_all_categories();
 		$array['category'] = $this->product->get_all_categories();
+//var_dump($array);
 		if ($id == 'all') {
-			$array['product']  = $this->product->get_all_products();
-			$array['each_page'] = $this->product->product_pages($start, $limit);		
+			$array['product']  = $this->product->get_all_products($array['sort']);
+			//var_dump($array['sort']);  var_dump($array['product']); 
+			$array['each_page'] = $this->product->product_pages($start, $limit, $array['sort']);	
+
 		} else {
 			$array['product']  = $this->product->get_product_by_category_id($id);
 			$array['each_page'] = $this->product->product_pages_id($start, $limit, $id);	
 		}
-	
+	//var_dump($array); 
 		$this->load->view('category_page', $array);
 	}	
 	public function add_shipping()
@@ -161,11 +159,6 @@ class Products extends CI_Controller {
 		$this->load->view('carts_page', $items);
 	}
 
-	public function sort() 
-	{
-			$this->_sort = $this->input->post('sort'); // $_POST("sort");
-			echo $this->_sort;
-	}
 	public function buy($id)
 	{
 		$cart_qty = $this->session->userdata('cart_qty');
